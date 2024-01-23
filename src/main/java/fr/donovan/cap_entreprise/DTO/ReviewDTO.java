@@ -1,16 +1,10 @@
 package fr.donovan.cap_entreprise.DTO;
 
-import fr.donovan.cap_entreprise.repository.ReviewRepository;
-import fr.donovan.cap_entreprise.validator.annotation.UniqueName;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +12,22 @@ import java.util.List;
 @Setter
 public class ReviewDTO {
 
-    @NotBlank(message = "This should be a valid name")
-    private String name;
+    @NotBlank(message = "This should be a valid description")
+    private String description;
 
+    @NotNull(message = "This should be a valid rating")
+    @Min(value = 0, message = "This have to be greater or equals than 0")
+    @Max(value = 20, message = "This have to be lower or equals than 20")
+    private float rating;
+
+    @NotBlank(message = "This should be a valid image")
+    private String image;
+
+    @Min(value = 1, message = "This have to be greater than 0")
+    @NotNull(message = "This should be a valid game")
+    private Long game_id;
+
+    @Min(value = 1, message = "This have to be greater than 0")
+    @NotNull(message = "This should be a valid gamer")
+    private Long gamer_id;
 }

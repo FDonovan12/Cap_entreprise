@@ -16,6 +16,10 @@ public class ReviewService implements DAOServiceInterface<Review> {
 
     private ReviewRepository reviewRepository;
 
+    private GameService gameService;
+
+    private UserService userService;
+
     public List<Review> findAll() {
         return this.reviewRepository.findAll();
     }
@@ -49,6 +53,10 @@ public class ReviewService implements DAOServiceInterface<Review> {
         if (id != null) {
             review = getObjectById(id);
         }
+        review.setDescription(reviewDTO.getDescription());
+        review.setRating(reviewDTO.getRating());
+        review.setGame(gameService.getObjectById(reviewDTO.getGame_id()));
+        review.setGamer(userService.getObjectById(reviewDTO.getGamer_id()));
 
         return reviewRepository.saveAndFlush(review);
     }

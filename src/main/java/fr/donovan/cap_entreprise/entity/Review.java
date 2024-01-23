@@ -1,6 +1,5 @@
 package fr.donovan.cap_entreprise.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import fr.donovan.cap_entreprise.entity.interfaces.EntityInterface;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,9 +10,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,12 +32,22 @@ public class Review implements EntityInterface {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private float note;
+    private float rating;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime moderateAt;
+    private LocalDateTime moderatedAt;
 
     @ManyToOne
     private Game game;
+
+    @ManyToOne
+    private Moderator moderator;
+
+    @ManyToOne
+    private User gamer;
+
+    public Date getCreatedAt() {
+        return Date.from(createdAt.atZone(ZoneId.systemDefault()).toInstant());
+    }
 }

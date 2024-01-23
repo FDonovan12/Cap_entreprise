@@ -24,6 +24,9 @@ public class Classification implements EntityInterface {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
     @OneToMany(mappedBy = "classification")
     private List<Game> games = new ArrayList<>();
 }

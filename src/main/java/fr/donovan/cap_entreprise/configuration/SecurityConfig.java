@@ -1,0 +1,40 @@
+package fr.donovan.cap_entreprise.configuration;
+
+import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.stereotype.Component;
+
+@Component
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers(HttpMethod.POST, UrlRoute.URL_REVIEW + "/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ROLE_MODERATOR")
+                                .requestMatchers(HttpMethod.PUT, "/**").hasAuthority("ROLE_MODERATOR")
+                                .requestMatchers(UrlRoute.URL_ADMIN+"/**").hasAuthority("ROLE_MODERATOR")
+                                .requestMatchers("/**").permitAll()
+                )
+                .formLogin(formLogin ->
+                        formLogin
+                                .loginPage(UrlRoute.URL_LOGIN)
+                                .permitAll()
+                )
+                .logout(logout ->
+                        logout
+                                .logoutSuccessUrl(UrlRoute.URL_LOGIN)
+                                .permitAll()
+                );
+
+        return http.build();
+    }
+
+}

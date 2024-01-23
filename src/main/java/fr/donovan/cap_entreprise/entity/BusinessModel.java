@@ -24,6 +24,9 @@ public class BusinessModel implements EntityInterface {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
     @OneToMany(mappedBy = "businessModel")
     private List<Game> games = new ArrayList<>();
 }

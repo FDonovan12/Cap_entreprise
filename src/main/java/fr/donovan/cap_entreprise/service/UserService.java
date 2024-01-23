@@ -1,21 +1,33 @@
 package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Gamer;
+import fr.donovan.cap_entreprise.entity.Moderator;
 import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.UserRepository;
 import fr.donovan.cap_entreprise.DTO.UserDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class UserService implements DAOServiceInterface<User> {
+public class UserService implements DAOServiceInterface<User>, UserDetailsService {
 
     private UserRepository userRepository;
+
+    private BCryptPasswordEncoder passwordEncoder;
 
     public List<User> findAll() {
         return this.userRepository.findAll();
@@ -46,10 +58,15 @@ public class UserService implements DAOServiceInterface<User> {
     }
 
     public User persist(UserDTO userDTO, Long id) {
-        User user = new Gamer();
-        if (id != null) {
-            user = getObjectById(id);
-        }
+        Gamer user = new Gamer();
+//        if (id != null) {
+//            user = getObjectById(id);
+//        }
+        user.setNickname(userDTO.getNickname());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setEmail(userDTO.getEmail());
+//        user.setBirthAt(LocalDate.parse(userDTO.getBirthAt()));
+        user.setBirthAt(userDTO.getBirthAt());
 
         return userRepository.saveAndFlush(user);
     }
@@ -59,5 +76,25 @@ public class UserService implements DAOServiceInterface<User> {
         UserDTO dto = new UserDTO();
         // dto.setName(user.getName());
         return dto;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> optionalUser = userRepository.findByNickname(username);
+        optionalUser.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = optionalUser.get();
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getNickname(),
+                user.getPassword(),
+                userGrantedAuthority(user)
+        );
+    }
+
+    private List<GrantedAuthority> userGrantedAuthority(User user) {
+        if (user instanceof Moderator) {
+            return List.of(new SimpleGrantedAuthority("ROLE_MODERATOR"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_GAMER"));
     }
 }

@@ -2,6 +2,7 @@ package fr.donovan.cap_entreprise.controller;
 
 import fr.donovan.cap_entreprise.entity.Review;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
+import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+
+    private final GameService gameService;
 
     @GetMapping(path = UrlRoute.URL_REVIEW)
     public ModelAndView index(ModelAndView mav) {
@@ -43,6 +46,7 @@ public class ReviewController {
             ModelAndView mav,
             HttpServletRequest httpServletRequest
     ) {
+        mav.addObject("games", gameService.findAll());
         return getFormByDTO(
                 mav,
                 new ReviewDTO(),
