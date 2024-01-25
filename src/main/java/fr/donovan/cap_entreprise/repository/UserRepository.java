@@ -1,5 +1,6 @@
 package fr.donovan.cap_entreprise.repository;
 
+import fr.donovan.cap_entreprise.entity.Moderator;
 import fr.donovan.cap_entreprise.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,4 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByNickname(String nickname);
 
+//    List<Moderator> findBy
 }

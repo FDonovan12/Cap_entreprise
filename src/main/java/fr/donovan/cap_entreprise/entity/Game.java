@@ -27,7 +27,7 @@ public class Game implements EntityInterface {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -48,12 +48,16 @@ public class Game implements EntityInterface {
     @ManyToOne
     private BusinessModel businessModel;
 
+    @ManyToOne
+    private Moderator moderator;
+
     @ManyToMany
     @JoinTable(name = "game_platform",
             joinColumns = @JoinColumn(name="game_id"),
             inverseJoinColumns = @JoinColumn(name="platform_id"))
     private List<Platform> platforms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
+
     private List<Review> reviews = new ArrayList<>();
 }

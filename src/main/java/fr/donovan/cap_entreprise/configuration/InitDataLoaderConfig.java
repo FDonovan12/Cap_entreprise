@@ -1,16 +1,30 @@
 package fr.donovan.cap_entreprise.configuration;
 
+import com.github.javafaker.Faker;
+import com.google.gson.Gson;
 import fr.donovan.cap_entreprise.entity.*;
 import fr.donovan.cap_entreprise.repository.*;
 import fr.donovan.cap_entreprise.service.*;
+import fr.donovan.cap_entreprise.utils.SearchImage;
+import fr.donovan.cap_entreprise.utils.Slugger;
 import lombok.AllArgsConstructor;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
@@ -48,8 +62,9 @@ public class InitDataLoaderConfig implements CommandLineRunner {
 
     private BCryptPasswordEncoder passwordEncoder;
 
+
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws IOException {
 
         runPublisher(List.of("Valve", "Riot Games", "Blizzard Entertainment"));
 
@@ -70,6 +85,7 @@ public class InitDataLoaderConfig implements CommandLineRunner {
         runReview(List.of("Vive les 360 no scope", "J'aime bien storm spirit", "Artifact",
                 "Valorant", "Tahm kench a les meilleur dialogue du jeu", "Legends of Runeterra",
                 "J'aime pas trop la goat meta", "Heroes of the Storm", "Trop bien les petite cartes"));
+
     }
 
     private void runReview(List<String> reviews) {
@@ -94,9 +110,6 @@ public class InitDataLoaderConfig implements CommandLineRunner {
     private void runGames(List<String> games) {
         games.forEach((string) -> {
             long id = (long) games.indexOf(string);
-            System.out.println("string = " + string);
-            System.out.println("id%3 = " + id % 3);
-            System.out.println("id/3 = " + ((id-1)/3+1));
             Game game = new Game();
             game.setId(id+1);
             game.setName(string);
@@ -107,6 +120,7 @@ public class InitDataLoaderConfig implements CommandLineRunner {
             game.setPublisher(publisherService.getObjectById((id-1)/3+1));
             game.setBusinessModel(businessModelService.getObjectById(id%3+1));
             game.setPlatforms(platformService.findAll());
+            game.setModerator((Moderator) userService.getObjectById(3L));
 
             game.setDescription(string + " est un jeu de type " + game.getGenre().getName());
             gameRepository.save(game);
@@ -165,21 +179,30 @@ public class InitDataLoaderConfig implements CommandLineRunner {
     }
 
     private void runUser(List<String> users) {
+        Faker faker = new Faker(Locale.of("fr"));
         users.forEach((string) -> {
             User user = new Gamer();
             if ((long) users.indexOf(string) + 1 == users.size()) {
                 user = new Moderator();
-                ((Moderator) user).setPhoneNumber("0698325417");
+                ((Moderator) user).setPhoneNumber(faker.phoneNumber().cellPhone());
             } else {
                 user = new Gamer();
-                ((Gamer) user).setBirthAt(LocalDate.now());
+                ((Gamer) user).setBirthAt(LocalDate.ofInstant(faker.date().birthday(12,70).toInstant(), ZoneId.systemDefault()));
             }
             user.setId((long) users.indexOf(string) + 1);
-            user.setEmail(string + "@gmail.com");
             user.setNickname(string);
+//            System.out.println("genre = " + faker.book().genre());
+//            System.out.println("publisher = " + faker.book().publisher());
+            user.setEmail(string + "@gmail.com");
             user.setPassword(passwordEncoder.encode("123456"));
             userRepository.save(user);
         });
         userRepository.flush();
+        Set<String> set = new LinkedHashSet<>();
+        for (int i = 0; i<5000; i++) {
+            set.add(faker.yoda().quote());
+        }
+//        set.forEach(System.out::println);
+        System.out.println(set.size());
     }
 }

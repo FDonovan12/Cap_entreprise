@@ -1,5 +1,7 @@
 package fr.donovan.cap_entreprise.controller;
 
+import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,10 @@ import java.security.Principal;
 @AllArgsConstructor
 public class HomeController {
 
-    @GetMapping(path = "/")
-    public ModelAndView index(ModelAndView mav) {
-        mav.setViewName("index");
-        return mav;
-    }
+    private final ReviewService reviewService;
 
+    @GetMapping(path = UrlRoute.URL_HOME)
+    public String index() {
+        return "redirect:" + UrlRoute.URL_REVIEW;
+    }
 }

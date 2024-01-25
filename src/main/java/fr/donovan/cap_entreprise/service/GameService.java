@@ -7,6 +7,7 @@ import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,14 +50,40 @@ public class GameService implements DAOServiceInterface<Game> {
         if (id != null) {
             game = getObjectById(id);
         }
+        game.setName(gameDTO.getName());
+        game.setDescription(gameDTO.getDescription());
+        game.setPublishedAt(LocalDate.parse(gameDTO.getPublishedAt()));
+        game.setImage(gameDTO.getImage());
+
+        game.setPublisher(gameDTO.getPublisher());
+        game.setGenre(gameDTO.getGenre());
+        game.setClassification(gameDTO.getClassification());
+        game.setModerator(gameDTO.getModerator());
+        game.setPlatforms(gameDTO.getPlatforms());
+        game.setBusinessModel(gameDTO.getBusinessModel());
 
         return gameRepository.saveAndFlush(game);
     }
 
     public GameDTO getDTOById(Long id) {
         Game game = getObjectById(id);
-        GameDTO dto = new GameDTO();
+        GameDTO gameDTO = new GameDTO();
         // dto.setName(game.getName());
-        return dto;
+        gameDTO.setName(game.getName());
+        gameDTO.setDescription(game.getDescription());
+        gameDTO.setPublishedAt(game.getPublishedAt() + "");
+        gameDTO.setImage(game.getImage());
+
+        gameDTO.setPublisher(game.getPublisher());
+        gameDTO.setGenre(game.getGenre());
+        gameDTO.setClassification(game.getClassification());
+        gameDTO.setModerator(game.getModerator());
+        gameDTO.setPlatforms(game.getPlatforms());
+        gameDTO.setBusinessModel(game.getBusinessModel());
+        return gameDTO;
+    }
+
+    public void delete(long id) {
+        gameRepository.delete(getObjectById(id));
     }
 }

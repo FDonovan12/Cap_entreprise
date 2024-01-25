@@ -1,10 +1,14 @@
 package fr.donovan.cap_entreprise.service;
 
+import fr.donovan.cap_entreprise.entity.Moderator;
 import fr.donovan.cap_entreprise.entity.Review;
 import fr.donovan.cap_entreprise.repository.ReviewRepository;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +26,10 @@ public class ReviewService implements DAOServiceInterface<Review> {
 
     public List<Review> findAll() {
         return this.reviewRepository.findAll();
+    }
+
+    public Page<Review> findAll(Pageable pageable) {
+        return reviewRepository.findAll(pageable);
     }
 
     public Review getByField(String field) {
@@ -55,8 +63,8 @@ public class ReviewService implements DAOServiceInterface<Review> {
         }
         review.setDescription(reviewDTO.getDescription());
         review.setRating(reviewDTO.getRating());
-        review.setGame(gameService.getObjectById(reviewDTO.getGame_id()));
-        review.setGamer(userService.getObjectById(reviewDTO.getGamer_id()));
+        review.setGame(reviewDTO.getGame());
+        review.setGamer(reviewDTO.getUser());
 
         return reviewRepository.saveAndFlush(review);
     }
@@ -66,5 +74,16 @@ public class ReviewService implements DAOServiceInterface<Review> {
         ReviewDTO dto = new ReviewDTO();
         // dto.setName(review.getName());
         return dto;
+    }
+
+    public void delete(long id) {
+        reviewRepository.delete(getObjectById(id));
+    }
+
+    public Review validate(long id, String name) {
+        Review review = getObjectById(id);
+        Moderator moderator = (Moderator) userService.getObjectByNickname(name);
+        review.setModerator(moderator);
+        return reviewRepository.saveAndFlush(review);
     }
 }

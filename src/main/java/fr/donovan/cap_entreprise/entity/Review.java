@@ -24,7 +24,7 @@ public class Review implements EntityInterface {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @CreationTimestamp
@@ -46,8 +46,4 @@ public class Review implements EntityInterface {
 
     @ManyToOne
     private User gamer;
-
-    public Date getCreatedAt() {
-        return Date.from(createdAt.atZone(ZoneId.systemDefault()).toInstant());
-    }
 }

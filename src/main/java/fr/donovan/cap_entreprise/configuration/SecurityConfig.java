@@ -17,6 +17,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth ->
                         auth
+                                .requestMatchers(UrlRoute.URL_LOGIN).permitAll()
+                                .requestMatchers(UrlRoute.URL_REGISTER).permitAll()
+                                .requestMatchers(UrlRoute.URL_LOGOUT).permitAll()
+                                .requestMatchers(UrlRoute.URL_GAME + "/**").authenticated()
+                                .requestMatchers(UrlRoute.URL_REVIEW + "/**").authenticated()
                                 .requestMatchers(HttpMethod.POST, UrlRoute.URL_REVIEW + "/**").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/**").hasAuthority("ROLE_MODERATOR")
                                 .requestMatchers(HttpMethod.PUT, "/**").hasAuthority("ROLE_MODERATOR")
@@ -26,6 +31,7 @@ public class SecurityConfig {
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage(UrlRoute.URL_LOGIN)
+                                .defaultSuccessUrl(UrlRoute.URL_REVIEW)
                                 .permitAll()
                 )
                 .logout(logout ->

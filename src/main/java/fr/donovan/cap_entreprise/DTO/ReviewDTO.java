@@ -1,5 +1,7 @@
 package fr.donovan.cap_entreprise.DTO;
 
+import fr.donovan.cap_entreprise.entity.Game;
+import fr.donovan.cap_entreprise.entity.User;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,11 +25,8 @@ public class ReviewDTO {
     @NotBlank(message = "This should be a valid image")
     private String image;
 
-    @Min(value = 1, message = "This have to be greater than 0")
     @NotNull(message = "This should be a valid game")
-    private Long game_id;
+    private Game game;
 
-    @Min(value = 1, message = "This have to be greater than 0")
-    @NotNull(message = "This should be a valid gamer")
-    private Long gamer_id;
+    private User user;
 }

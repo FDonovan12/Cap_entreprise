@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
-<jsp:include flush="true" page="../base.jsp"/>
+<jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
 <form method="POST" action="${UrlRoute.URL_LOGIN}" class="form-signin">
     <h2 class="form-heading">Log in</h2>
@@ -19,4 +19,4 @@
     </div>
 </form>
 
-<%@ include file="../footer.jsp" %>
+<jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

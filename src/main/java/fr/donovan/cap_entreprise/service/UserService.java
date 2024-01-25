@@ -33,6 +33,10 @@ public class UserService implements DAOServiceInterface<User>, UserDetailsServic
         return this.userRepository.findAll();
     }
 
+    public List<User> findAllModerator() {
+        return this.userRepository.findAll();
+    }
+
     public User getByField(String field) {
         try {
             Long id = Long.parseLong(field);
@@ -45,6 +49,11 @@ public class UserService implements DAOServiceInterface<User>, UserDetailsServic
     public User getObjectById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElseThrow(() -> new NotFoundCapEntrepriseException("User", "id", id));
+    }
+
+    public User getObjectByNickname(String nickname) {
+        Optional<User> optionalUser = userRepository.findByNickname(nickname);
+        return optionalUser.orElseThrow(() -> new NotFoundCapEntrepriseException("User", "nickname", nickname));
     }
 
     public User getObjectBySlug(String slug) {
@@ -80,9 +89,7 @@ public class UserService implements DAOServiceInterface<User>, UserDetailsServic
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findByNickname(username);
-        optionalUser.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        User user = optionalUser.get();
+        User user = getObjectByNickname(username);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getNickname(),

@@ -5,16 +5,19 @@ import fr.donovan.cap_entreprise.DTO.ReviewDTO;
 import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.security.Principal;
 
 @Controller
 @RequestMapping
@@ -25,10 +28,16 @@ public class ReviewController {
 
     private final GameService gameService;
 
+    private final UserService userService;
+
     @GetMapping(path = UrlRoute.URL_REVIEW)
-    public ModelAndView index(ModelAndView mav) {
+    public ModelAndView index(ModelAndView mav, @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "createdAt" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         mav.setViewName("review/index");
-        mav.addObject("reviews", reviewService.findAll());
+        mav.addObject("pageReviews", reviewService.findAll(pageable));
         return mav;
     }
 
@@ -73,9 +82,10 @@ public class ReviewController {
     public ModelAndView formHandler(
             @Valid @ModelAttribute("review") ReviewDTO reviewDTO,
             BindingResult result,
-            ModelAndView mav
+            ModelAndView mav,
+            Principal principal
     ) {
-        return formHandle(result, mav, reviewDTO, null);
+        return formHandle(result, mav, reviewDTO, null, principal);
     }
 
     @PutMapping(path = UrlRoute.URL_REVIEW_EDIT + "/{id}")
@@ -83,9 +93,22 @@ public class ReviewController {
             @Valid @ModelAttribute("review") ReviewDTO reviewDTO,
             BindingResult result,
             ModelAndView mav,
-            @PathVariable Long id
+            @PathVariable Long id,
+            Principal principal
     ) {
-        return formHandle(result, mav, reviewDTO, id);
+        return formHandle(result, mav, reviewDTO, id, principal);
+    }
+
+    @GetMapping(path = UrlRoute.URL_REVIEW_DELETE + "/{id}")
+    public ModelAndView deleteReview(ModelAndView mav, @PathVariable("id") long id) {
+        reviewService.delete(id);
+        return new ModelAndView("redirect:" + UrlRoute.URL_REVIEW);
+    }
+
+    @GetMapping(path = UrlRoute.URL_REVIEW_VALIDATE + "/{id}")
+    public ModelAndView validateReview(ModelAndView mav, @PathVariable("id") long id, Principal principal) {
+        reviewService.validate(id, principal.getName());
+        return new ModelAndView("redirect:" + UrlRoute.URL_REVIEW);
     }
 
     private ModelAndView getFormByDTO(ModelAndView mav, ReviewDTO dto, String uri, boolean isEdit) {
@@ -96,11 +119,12 @@ public class ReviewController {
         return mav;
     }
 
-    private ModelAndView formHandle(BindingResult result, ModelAndView mav, ReviewDTO dto, Long id) {
+    private ModelAndView formHandle(BindingResult result, ModelAndView mav, ReviewDTO dto, Long id, Principal principal) {
         if (result.hasErrors()) {
             mav.setViewName("review/form");
             return mav;
         }
+        dto.setUser(userService.getObjectByNickname(principal.getName()));
         reviewService.persist(dto, id);
         mav.setViewName("redirect:" + UrlRoute.URL_REVIEW);
         return mav;

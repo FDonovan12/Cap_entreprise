@@ -7,3 +7,12 @@
 <%@ page import="fr.donovan.cap_entreprise.mapping.UrlRoute" %>
 <%@ page import="org.springframework.web.servlet.support.RequestContextUtils" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="fr.donovan.cap_entreprise.utils.DateUtils" %>
+<%@ page import="fr.donovan.cap_entreprise.utils.JspUtils" %>
+<%
+    WebApplicationContext ctx = RequestContextUtils.findWebApplicationContext(request);
+    if (ctx != null) {
+        request.setAttribute("dateUtils", ctx.getBean(DateUtils.class));
+        request.setAttribute("jspUtils", ctx.getBean(JspUtils.class));
+    }
+%>
