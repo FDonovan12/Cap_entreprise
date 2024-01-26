@@ -3,6 +3,7 @@ package fr.donovan.cap_entreprise.utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,55 +48,51 @@ public class JspUtils {
         return result;
     }
 
-    public String getPagination(Page<Object> page, String url) {
+    public String getPagination(Page<Object> page, String url, String currentQuery) {
         int totalPage = page.getTotalPages();
         int currentPage = page.getNumber()+1;
 
         String invisibleShort = "<span class=\"invisible\">#</span>";
         String invisibleLong = "<span class=\"invisible\">##</span>";
-        // Pageable url nb_page char
-        String format = "<a class=\"%s\" href=\"%s?page=%d\">%s</a>";
+
+        String format = "<a class=\"%s\" href=\"%s\">%s</a>";
         String result = "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
 
         if (!page.isFirst()) {
-            result += getLinkPage(format,"pageable", url, 0, "<<");
+            result += getLinkPage(format,"pageable", url, currentQuery, 0, "<<");
         } else {
             result += invisibleLong;
         }
         for (int i = currentPage-2; i <= currentPage+2 ; i++) {
             if (i >= 1 && i <= totalPage) {
                 if (i == currentPage) {
-                    result += getLinkPage(format,"current", url, i, i+"");
+                    result += getLinkPage(format,"current", url, currentQuery, i, i+"");
                 } else {
-                    result += getLinkPage(format,"pageable", url, i, i+"");
+                    result += getLinkPage(format,"pageable", url, currentQuery, i, i+"");
                 }
             } else {
                 result += invisibleShort;
             }
         }
         if (!page.isLast()) {
-            result += getLinkPage(format,"pageable", url, totalPage, ">>");
+            result += getLinkPage(format,"pageable", url, currentQuery, totalPage, ">>");
         } else {
             result += invisibleLong;
         }
         result += "</div></div>";
 
         result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
-        System.out.println("totalPage = " + totalPage);
-        System.out.println("totalPage/10 = " + totalPage/10);
         int nbPage = Math.min(9, totalPage/2);
-        int part = (int)(totalPage/(nbPage+1));
         for (int i = 1; i <= nbPage; i++) {
-            System.out.println("i = " + i);
-            System.out.println("i*10+1 = " + i*10+1);
-            result += getLinkPage(format,"pageable", url, (int)(i*totalPage/(nbPage+1)), (int)(i*totalPage/(nbPage+1))+"");
+            result += getLinkPage(format,"pageable", url, currentQuery, (int)(i*totalPage/(nbPage+1)), (int)(i*totalPage/(nbPage+1))+"");
         }
         result += "</div></div>";
         return result;
     }
 
-    public String getLinkPage(String format, String cssClass, String url, int nb_page, String character) {
-        return String.format(format, cssClass, url, nb_page, character);
+    public String getLinkPage(String format, String cssClass, String url, String currentQuery, int nb_page, String character) {
+        String newUrl = getUrlFrom(url, currentQuery, "page="+nb_page);
+        return String.format(format, cssClass, newUrl, character);
     }
 
     public String getRainbow(int number) {
@@ -107,7 +104,48 @@ public class JspUtils {
             int blue = (int)(Math.random()*256);
             result += String.format(", rgb(%d,%d,%d)", red, green, blue);
         }
-        return result+")";
+        return result+") !important";
+    }
+
+    public String getUrlFrom(String currentUrl, String currentQuery, String newSort) {
+        UriComponentsBuilder url = UriComponentsBuilder.fromHttpUrl(currentUrl);
+        if (!currentQuery.isEmpty()) {
+            for (String oldQueryParamSplit : currentQuery.split("&")) {
+                url = addQueryParam(url, oldQueryParamSplit);
+            }
+        }
+        url = addQueryParam(url, newSort);
+        return url.toUriString();
+    }
+
+    private UriComponentsBuilder addQueryParam(UriComponentsBuilder uri, String query) {
+        String[] parsed = query.split("=");
+        return addQueryParam(uri, parsed[0], parsed[1]);
+    }
+
+    private UriComponentsBuilder addQueryParam(UriComponentsBuilder uri, String queryParamName, String queryParamValue) {
+        if (queryParamName.equals("page")) {
+            if ( uri.toUriString().contains("page")) {
+                return UriComponentsBuilder.fromHttpUrl(
+                        uri.toUriString()
+                                .replaceAll("page=[0-9]+",
+                                        "page=" + queryParamValue));
+            } else {
+                uri.queryParam(queryParamName, queryParamValue);
+            }
+        }
+        
+        if (queryParamName.equals("sort")) {
+            if (uri.toUriString().contains(queryParamName + "=" + queryParamValue.split(",")[0] + ",")) {
+                return UriComponentsBuilder.fromHttpUrl(
+                        uri.toUriString()
+                                .replaceAll(queryParamName + "=" + queryParamValue.split(",")[0] + ",(asc|desc)",
+                                        queryParamName + "=" + queryParamValue));
+            } else {
+                return uri.queryParam(queryParamName, queryParamValue);
+            }
+        }
+        return uri;
     }
 
 }

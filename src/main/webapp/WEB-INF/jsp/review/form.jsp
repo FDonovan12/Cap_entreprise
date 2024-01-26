@@ -23,7 +23,6 @@
             <f:input type="text" cssClass="form-control" path="image"/>
             <f:errors path="image" cssClass="invalid-feedback"/>
         </div>
-
         <f:label path="game" class="col-sm-2 col-form-label">Jeu</f:label>
         <div class="col-sm-10 mb-3">
             <f:select items="${games}" itemLabel="name" cssClass="form-select" path="game"/>

@@ -5,6 +5,8 @@ public interface UrlRouteUser {
     String URL_USER = "/user";
     String URL_USER_NEW = URL_USER + "/new";
     String URL_USER_EDIT = URL_USER + "/edit";
+    String URL_USER_ECCENTRIC = URL_USER + "/eccentric";
+    String URL_USER_VERY_ECCENTRIC = URL_USER + "/very_eccentric";
 
     String URL_ADMIN_USER = "/admin" + URL_USER;
     String URL_ADMIN_USER_NEW = URL_ADMIN_USER + "/new";

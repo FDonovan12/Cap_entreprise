@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Pageable;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -56,9 +57,28 @@ public class ReviewController {
             HttpServletRequest httpServletRequest
     ) {
         mav.addObject("games", gameService.findAll());
+        ReviewDTO dto = new ReviewDTO();
+        dto.setGame(gameService.getObjectById(2L));
         return getFormByDTO(
                 mav,
-                new ReviewDTO(),
+                dto,
+                httpServletRequest.getRequestURI(),
+                false
+        );
+    }
+
+    @GetMapping(path = UrlRoute.URL_REVIEW_NEW + "/{id}")
+    public ModelAndView create(
+            @PathVariable Long id,
+            ModelAndView mav,
+            HttpServletRequest httpServletRequest
+    ) {
+        mav.addObject("games", List.of(gameService.getObjectById(id)));
+        ReviewDTO dto = new ReviewDTO();
+//        dto.setGame(gameService.getObjectById(id));
+        return getFormByDTO(
+                mav,
+                dto,
                 httpServletRequest.getRequestURI(),
                 false
         );
@@ -84,6 +104,17 @@ public class ReviewController {
             BindingResult result,
             ModelAndView mav,
             Principal principal
+    ) {
+        return formHandle(result, mav, reviewDTO, null, principal);
+    }
+
+    @PostMapping(path = UrlRoute.URL_REVIEW_NEW + "/{id}")
+    public ModelAndView formHandler(
+            @Valid @ModelAttribute("review") ReviewDTO reviewDTO,
+            BindingResult result,
+            ModelAndView mav,
+            Principal principal,
+            @PathVariable Long id
     ) {
         return formHandle(result, mav, reviewDTO, null, principal);
     }

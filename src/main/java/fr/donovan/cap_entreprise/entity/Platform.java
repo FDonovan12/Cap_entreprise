@@ -26,6 +26,8 @@ public class Platform implements EntityInterface {
     @Column(nullable = false)
     private String name;
 
+    private String image;
+
     @ManyToMany
     @JoinTable(name = "game_platform",
             joinColumns = @JoinColumn(name="platform_id"),

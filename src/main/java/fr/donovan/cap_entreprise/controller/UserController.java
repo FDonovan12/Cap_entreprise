@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -82,6 +83,18 @@ public class UserController {
             @PathVariable Long id
     ) {
         return formHandle(result, mav, userDTO, id);
+    }
+
+    @GetMapping(path = UrlRoute.URL_USER_ECCENTRIC + "/{url}")
+    public ModelAndView eccentric(ModelAndView mav, Principal principal, @PathVariable String url) {
+        userService.eccentric(principal.getName());
+        return new ModelAndView("redirect:/" + url);
+    }
+
+    @GetMapping(path = UrlRoute.URL_USER_VERY_ECCENTRIC + "/{url}")
+    public ModelAndView veryEccentric(ModelAndView mav, Principal principal, @PathVariable String url) {
+        userService.veryEccentric(principal.getName());
+        return new ModelAndView("redirect:/" + url);
     }
 
     private ModelAndView getFormByDTO(ModelAndView mav, UserDTO dto, String uri, boolean isEdit) {

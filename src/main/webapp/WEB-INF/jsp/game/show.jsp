@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
-<c:set var="title" scope="request" value="game_show"/>
+<c:set var="title" scope="request" value="${game.name}"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
 <h1 class="mb-2">${game.name}</h1>
@@ -45,7 +45,7 @@
     </div>
     <h2 class="mb-3 mt-5">Description</h2>
     <p class="mb-3">${game.description}</p>
-    <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW_NEW}">Laisser un avis sur ce jeu</a>
+    <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW_NEW}/${game.id}">Laisser un avis sur ce jeu</a>
 </div>
 
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

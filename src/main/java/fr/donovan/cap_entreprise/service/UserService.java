@@ -2,6 +2,7 @@ package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Gamer;
 import fr.donovan.cap_entreprise.entity.Moderator;
+import fr.donovan.cap_entreprise.entity.Review;
 import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.UserRepository;
 import fr.donovan.cap_entreprise.DTO.UserDTO;
@@ -103,5 +104,17 @@ public class UserService implements DAOServiceInterface<User>, UserDetailsServic
             return List.of(new SimpleGrantedAuthority("ROLE_MODERATOR"));
         }
         return List.of(new SimpleGrantedAuthority("ROLE_GAMER"));
+    }
+
+    public User eccentric(String name) {
+        User user = getObjectByNickname(name);
+        user.setEccentric(!user.isEccentric());
+        return userRepository.saveAndFlush(user);
+    }
+
+    public User veryEccentric(String name) {
+        User user = getObjectByNickname(name);
+        user.setVeryEccentric(!user.isVeryEccentric());
+        return userRepository.saveAndFlush(user);
     }
 }

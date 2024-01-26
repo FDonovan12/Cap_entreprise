@@ -1,8 +1,5 @@
 package fr.donovan.cap_entreprise.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import fr.donovan.cap_entreprise.entity.interfaces.EntityInterface;
-import fr.donovan.cap_entreprise.entity.interfaces.SluggerInterface;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,6 +31,12 @@ public abstract class User implements UserDetails {
 
     @Column(nullable = false, unique = true)
     protected String email;
+
+    @Column(nullable = false)
+    protected boolean eccentric = false;
+
+    @Column(nullable = false)
+    protected boolean veryEccentric = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

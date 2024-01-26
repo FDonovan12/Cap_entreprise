@@ -26,6 +26,24 @@
                     Jeu
                 </a>
             </div>
+            <c:set var="colorEccentric" scope="request" value="btn-secondary"/>
+            <c:set var="colorVeryEccentric" scope="request" value="invisible"/>
+            <c:if test="${userLogged.eccentric}">
+                <c:set var="colorEccentric" scope="request" value="btn-success"/>
+                <c:set var="colorVeryEccentric" scope="request" value="btn-secondary"/>
+            </c:if>
+            <c:if test="${userLogged.veryEccentric}">
+                <c:set var="colorEccentric" scope="request" value="invisible"/>
+                <c:set var="colorVeryEccentric" scope="request" value="btn-success"/>
+            </c:if>
+            <div>
+                <a class="navbar-brand ms-3 btn ${colorEccentric}" href="${UrlRoute.URL_USER_ECCENTRIC}${currentPath}">
+                    Eccentric
+                </a>
+                <a class="navbar-brand ms-3 btn ${colorVeryEccentric}" href="${UrlRoute.URL_USER_VERY_ECCENTRIC}${currentPath}">
+                    Very eccentric
+                </a>
+            </div>
             <security:authorize access="isAnonymous()">
                 <div>
                     <a class="navbar-brand ms-3 btn btn-secondary" href="${UrlRoute.URL_LOGIN}">
@@ -51,4 +69,7 @@
     </div>
 
 </nav>
-<div class="container-fluid p-5" style="${jspUtils.getRainbow(500)}">
+
+<div class="container-fluid p-5" <c:if test="${userLogged.eccentric}">
+     style="${jspUtils.getRainbow(500)}"
+</c:if>>
