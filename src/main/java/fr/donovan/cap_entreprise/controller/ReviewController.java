@@ -2,6 +2,7 @@ package fr.donovan.cap_entreprise.controller;
 
 import fr.donovan.cap_entreprise.entity.Review;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
+import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
@@ -36,9 +37,11 @@ public class ReviewController {
                                                 size = 6, // nb Element par page
                                                 sort = { "createdAt" }, // order by
                                                 direction = Sort.Direction.DESC)
-                                                Pageable pageable) {
+                                                Pageable pageable,
+                                                Principal principal) {
         mav.setViewName("review/index");
-        mav.addObject("pageReviews", reviewService.findAll(pageable));
+        User user = userService.getObjectByNickname(principal.getName());
+        mav.addObject("pageReviews", reviewService.findAll(user, pageable));
         return mav;
     }
 

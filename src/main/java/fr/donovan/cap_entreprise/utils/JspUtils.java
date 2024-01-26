@@ -119,11 +119,15 @@ public class JspUtils {
     }
 
     private UriComponentsBuilder addQueryParam(UriComponentsBuilder uri, String query) {
+        if (query.equals("continue")) {
+            return uri;
+        }
         String[] parsed = query.split("=");
         return addQueryParam(uri, parsed[0], parsed[1]);
     }
 
     private UriComponentsBuilder addQueryParam(UriComponentsBuilder uri, String queryParamName, String queryParamValue) {
+
         if (queryParamName.equals("page")) {
             if ( uri.toUriString().contains("page")) {
                 return UriComponentsBuilder.fromHttpUrl(

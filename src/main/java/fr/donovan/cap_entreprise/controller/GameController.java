@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -100,6 +101,25 @@ public class GameController {
         return formHandle(result, mav, gameDTO, id, principal);
     }
 
+    @GetMapping(UrlRoute.URL_GAME_UPLOAD + "/{id}")
+    public ModelAndView fileUpload(ModelAndView mav, HttpServletRequest httpServletRequest, @PathVariable Long id) {
+        mav.setViewName("game/image");
+        mav.addObject("action", httpServletRequest.getRequestURI());
+        System.out.println("httpServletRequest = " + httpServletRequest.getRequestURI());
+        return mav;
+    }
+
+    @PostMapping(UrlRoute.URL_GAME_UPLOAD + "/{id}")
+    public ModelAndView fileUploadPost(@RequestParam("file") MultipartFile file, ModelAndView mav, @PathVariable Long id) {
+        System.out.println("GameController.fileUploadPost");
+        String image = gameService.upload("jeu/", file);
+        System.out.println("image = " + image);
+        gameService.addImage(image, id);
+        mav.setViewName("redirect:" + UrlRoute.URL_GAME+"/"+id);
+        return mav;
+    }
+
+
     @GetMapping(path = UrlRoute.URL_GAME_DELETE + "/{id}")
     public ModelAndView deleteGame(ModelAndView mav, @PathVariable("id") long id) {
         gameService.delete(id);
@@ -121,14 +141,11 @@ public class GameController {
     }
 
     private ModelAndView formHandle(BindingResult result, ModelAndView mav, GameDTO dto, Long id, Principal principal) {
-        System.out.println("GameController.formHandle");
         if (result.hasErrors()) {
-            System.out.println("result = " + result);
             mav.setViewName("game/form");
             return mav;
         }
         dto.setModerator((Moderator) userService.getObjectByNickname(principal.getName()));
-        System.out.println("result = " + result);
         gameService.persist(dto, id);
         mav.setViewName("redirect:" + UrlRoute.URL_GAME);
         return mav;

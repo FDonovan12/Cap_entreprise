@@ -55,7 +55,7 @@
                             <a class="btn btn-danger" href="${UrlRoute.URL_GAME_DELETE}/${game.id}">
                                 <i class="fa-regular fa-trash-can"></i>
                             </a>
-                            <a class="btn btn-success" href="${UrlRoute.URL_GAME_DELETE}/${game.id}">
+                            <a class="btn btn-success" href="${UrlRoute.URL_GAME_UPLOAD}/${game.id}">
                                 <i class="fa-regular fa-image"></i>
                             </a>
                         </security:authorize>

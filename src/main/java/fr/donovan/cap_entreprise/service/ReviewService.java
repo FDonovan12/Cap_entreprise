@@ -1,7 +1,9 @@
 package fr.donovan.cap_entreprise.service;
 
+import fr.donovan.cap_entreprise.entity.Gamer;
 import fr.donovan.cap_entreprise.entity.Moderator;
 import fr.donovan.cap_entreprise.entity.Review;
+import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.ReviewRepository;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
@@ -28,8 +30,11 @@ public class ReviewService implements DAOServiceInterface<Review> {
         return this.reviewRepository.findAll();
     }
 
-    public Page<Review> findAll(Pageable pageable) {
-        return reviewRepository.findAll(pageable);
+    public Page<Review> findAll(User user, Pageable pageable) {
+        if (user instanceof Gamer) {
+            return reviewRepository.findByModeratorIsNotNullOrGamerOrderByModerator(user, pageable);
+        }
+        return  reviewRepository.findAll(pageable);
     }
 
     public Review getByField(String field) {

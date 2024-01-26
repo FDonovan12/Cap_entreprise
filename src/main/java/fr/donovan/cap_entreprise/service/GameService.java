@@ -6,7 +6,12 @@ import fr.donovan.cap_entreprise.DTO.GameDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +22,14 @@ public class GameService implements DAOServiceInterface<Game> {
 
     private GameRepository gameRepository;
 
+    private static final String DIR_PATH = "src/main/webapp";
+
+    private static final String PATH = "/resources/image/";
+
     public List<Game> findAll() {
         return this.gameRepository.findAll();
     }
+
 
     public Game getByField(String field) {
         try {
@@ -85,5 +95,28 @@ public class GameService implements DAOServiceInterface<Game> {
 
     public void delete(long id) {
         gameRepository.delete(getObjectById(id));
+    }
+
+    public String upload(String path, MultipartFile file) {
+        try {
+            File dir = new File(DIR_PATH + PATH + path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+            stream.write(file.getBytes());
+            stream.close();
+            return PATH + path + file.getOriginalFilename();
+        } catch (IOException e) {
+            System.out.println("Failed.");
+            return "Error : Something goes wrong...";
+        }
+    }
+
+    public void addImage(String image, Long id) {
+        Game game = getObjectById(id);
+        game.setImage(image);
+        gameRepository.saveAndFlush(game);
     }
 }

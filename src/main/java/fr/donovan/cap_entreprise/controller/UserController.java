@@ -88,13 +88,13 @@ public class UserController {
     @GetMapping(path = UrlRoute.URL_USER_ECCENTRIC + "/{url}")
     public ModelAndView eccentric(ModelAndView mav, Principal principal, @PathVariable String url) {
         userService.eccentric(principal.getName());
-        return new ModelAndView("redirect:/" + url);
+        return new ModelAndView("redirect:" + url.replaceAll("-_-", "/"));
     }
 
     @GetMapping(path = UrlRoute.URL_USER_VERY_ECCENTRIC + "/{url}")
     public ModelAndView veryEccentric(ModelAndView mav, Principal principal, @PathVariable String url) {
         userService.veryEccentric(principal.getName());
-        return new ModelAndView("redirect:/" + url);
+        return new ModelAndView("redirect:" + url.replaceAll("-_-", "/"));
     }
 
     private ModelAndView getFormByDTO(ModelAndView mav, UserDTO dto, String uri, boolean isEdit) {

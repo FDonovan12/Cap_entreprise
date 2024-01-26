@@ -37,10 +37,10 @@
                 <c:set var="colorVeryEccentric" scope="request" value="btn-success"/>
             </c:if>
             <div>
-                <a class="navbar-brand ms-3 btn ${colorEccentric}" href="${UrlRoute.URL_USER_ECCENTRIC}${currentPath}">
+                <a class="navbar-brand ms-3 btn ${colorEccentric}" href="${UrlRoute.URL_USER_ECCENTRIC}/${currentPath.replaceAll("/","-_-")}">
                     Eccentric
                 </a>
-                <a class="navbar-brand ms-3 btn ${colorVeryEccentric}" href="${UrlRoute.URL_USER_VERY_ECCENTRIC}${currentPath}">
+                <a class="navbar-brand ms-3 btn ${colorVeryEccentric}" href="${UrlRoute.URL_USER_VERY_ECCENTRIC}/${currentPath.replaceAll("/","-_-")}">
                     Very eccentric
                 </a>
             </div>
