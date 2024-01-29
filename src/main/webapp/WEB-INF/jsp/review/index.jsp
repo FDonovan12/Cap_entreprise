@@ -24,21 +24,29 @@
 <%--        <%@ include file="../component/sortable.jsp" %>--%>
 
         <span class="mt-auto mb-2">
-            <a href="${currentUrl}" class="btn-link">
-                Reset
+            <a href="${currentUrl}" class="btn-link" title="Réinitialiser les filtres">
+                <i class="fa fa-filter-circle-xmark"></i>
             </a>
         </span>
     </div>
     <table class="table table-dark table-hover <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if>">
         <thead>
             <tr>
-                <td ${rainbowStyleVery}>
+                <td width="200" ${rainbowStyleVery}>
 <%--                    Date de creation--%>
                     <c:set var="label" scope="request" value="Date de creation"/>
                     <c:set var="sortable" value="createdAt"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
                 <td ${rainbowStyleVery}>
+<%--                    <f:select items="${games}" itemLabel="name" cssClass="form-select" path="game"/>--%>
+<%--                    <label for="game-select"></label>--%>
+<%--                    <select name="game" id="game-select">--%>
+<%--                        <option value="">Tout les jeux</option>--%>
+<%--                        <c:forEach items="${games}" var="game">--%>
+<%--                            <option value="${game.name}">${game.name}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
                     <c:set var="label" scope="request" value="Jeu"/>
                     <c:set var="sortable" value="game.name"/>
                     <%@ include file="../component/sortable.jsp" %>
@@ -49,12 +57,16 @@
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
                 <td ${rainbowStyleVery}>
+                    <c:set var="label" scope="request" value="Statut"/>
+                    <c:set var="sortable" value="moderator"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td width="50" ${rainbowStyleVery}>
                     <c:set var="label" scope="request" value="Note"/>
                     <c:set var="sortable" value="rating"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
-                <td ${rainbowStyleVery}>Statut</td>
-                <td ${rainbowStyleVery}>Operation</td>
+                <td width="200" ${rainbowStyleVery}>Operation</td>
             </tr>
         </thead>
         <tbody>
@@ -63,7 +75,6 @@
                         <td ${rainbowStyleVery}>${dateUtils.getDateFormat(review.createdAt, "dd MMMM yyyy à hh:mm")}</td>
                         <td ${rainbowStyleVery}>${review.game.name}</td>
                         <td ${rainbowStyleVery}>${review.gamer.nickname}</td>
-                        <td ${rainbowStyleVery}>${jspUtils.getStringRating(review.rating)}</td>
                         <td ${rainbowStyleVery}>
                             <c:choose>
                                 <c:when test="${review.moderator == null}">
@@ -74,6 +85,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
+                        <td ${rainbowStyleVery}>${jspUtils.getStringRating(review.rating)}</td>
                         <td ${rainbowStyleVery}>
                             <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW}/${review.id}">
                                 <i class="fa-regular fa-eye"></i>
@@ -96,6 +108,7 @@
 </div>
 <div class="d-flex justify-content-between">
     <a href="${UrlRoute.URL_REVIEW_NEW}">Nouveau commentaire</a>
+    <span class="my-auto">Total page ${pageReviews.totalPages}</span>
     <a href="${UrlRoute.URL_EXPORT}" class="btn btn-link">
         <i class="fa-solid fa-file-excel me-1"></i>
         Télécharger export Excel

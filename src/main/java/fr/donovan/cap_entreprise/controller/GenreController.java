@@ -4,6 +4,7 @@ import fr.donovan.cap_entreprise.entity.Genre;
 import fr.donovan.cap_entreprise.DTO.GenreDTO;
 import fr.donovan.cap_entreprise.service.GenreService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class GenreController {
 
     private final GenreService genreService;
 
+    private final ReviewService reviewService;
+
     @GetMapping(path = UrlRoute.URL_GENRE)
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("genre/index");
@@ -35,6 +38,7 @@ public class GenreController {
 
         mav.setViewName("genre/show");
         mav.addObject("genre", genre);
+        mav.addObject("games_rating", reviewService.getRatingOfGames(genre.getGames()));
         return mav;
     }
 

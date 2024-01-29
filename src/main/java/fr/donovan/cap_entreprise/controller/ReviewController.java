@@ -42,6 +42,14 @@ public class ReviewController {
         mav.setViewName("review/index");
         User user = userService.getObjectByNickname(principal.getName());
         mav.addObject("pageReviews", reviewService.findAll(user, pageable));
+        mav.addObject("games", gameService.findAll());
+        return mav;
+    }
+    @PostMapping(path = UrlRoute.URL_REVIEW)
+    public ModelAndView indexFilter(ModelAndView mav,
+                                    @ModelAttribute("review") ReviewDTO reviewFilter) {
+
+        mav.setViewName("review/index");
         return mav;
     }
 
@@ -147,6 +155,7 @@ public class ReviewController {
 
     private ModelAndView getFormByDTO(ModelAndView mav, ReviewDTO dto, String uri, boolean isEdit) {
         mav.setViewName("review/form");
+        System.out.println("uri = " + uri);
         mav.addObject("review", dto);
         mav.addObject("action", uri);
         mav.addObject("isEdit", isEdit);

@@ -1,15 +1,11 @@
 package fr.donovan.cap_entreprise.service;
 
-import fr.donovan.cap_entreprise.entity.Gamer;
-import fr.donovan.cap_entreprise.entity.Moderator;
-import fr.donovan.cap_entreprise.entity.Review;
-import fr.donovan.cap_entreprise.entity.User;
+import fr.donovan.cap_entreprise.entity.*;
 import fr.donovan.cap_entreprise.repository.ReviewRepository;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +27,19 @@ public class ReviewService implements DAOServiceInterface<Review> {
     }
 
     public Page<Review> findAll(User user, Pageable pageable) {
+        System.out.println("pageable = " + pageable);
         if (user instanceof Gamer) {
-            return reviewRepository.findByModeratorIsNotNullOrGamerOrderByModerator(user, pageable);
+            return reviewRepository.findByModeratorIsNotNullOrGamer(user, pageable);
         }
         return  reviewRepository.findAll(pageable);
+    }
+
+    public double getRatingOfGame(Game game) {
+        return reviewRepository.getRatingOfGame(game);
+    }
+
+    public List<Double> getRatingOfGames(List<Game> games) {
+        return reviewRepository.getRatingOfGames(games);
     }
 
     public Review getByField(String field) {

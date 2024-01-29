@@ -60,4 +60,10 @@ public class Game implements EntityInterface {
     @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE)
 
     private List<Review> reviews = new ArrayList<>();
+
+    public void addPlatform(Platform platform) {
+        if (!platforms.contains(platform)) {
+            platforms.add(platform);
+        }
+    }
 }

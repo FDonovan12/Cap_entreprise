@@ -4,6 +4,7 @@ import fr.donovan.cap_entreprise.entity.Platform;
 import fr.donovan.cap_entreprise.DTO.PlatformDTO;
 import fr.donovan.cap_entreprise.service.PlatformService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class PlatformController {
 
     private final PlatformService platformService;
 
+    private final ReviewService reviewService;
+
     @GetMapping(path = UrlRoute.URL_PLATFORM)
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("platform/index");
@@ -35,6 +38,7 @@ public class PlatformController {
 
         mav.setViewName("platform/show");
         mav.addObject("platform", platform);
+        mav.addObject("games_rating", reviewService.getRatingOfGames(platform.getGames()));
         return mav;
     }
 

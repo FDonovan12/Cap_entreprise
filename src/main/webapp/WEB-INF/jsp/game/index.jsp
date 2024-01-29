@@ -28,6 +28,7 @@
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
         <thead>
             <tr>
+                <td ${rainbowStyleVery}>image</td>
                 <td ${rainbowStyleVery}>
                     <c:set var="label" scope="request" value="Nom"/>
                     <c:set var="sortable" value="name"/>
@@ -38,16 +39,15 @@
                     <c:set var="sortable" value="publisher.name"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
-                <td ${rainbowStyleVery}>image</td>
                 <td ${rainbowStyleVery}>Operation</td>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${games.content}" var="game">
                 <tr>
+                    <td ${rainbowStyleVery}><img height="100" src="${game.image}"></td>
                     <td ${rainbowStyleVery}>${game.name}</td>
                     <td ${rainbowStyleVery}>${game.publisher.name}</td>
-                    <td ${rainbowStyleVery}>${game.image}</td>
                     <td ${rainbowStyleVery}>
                         <a class="btn btn-secondary" href="${UrlRoute.URL_GAME}/${game.id}">
                             <i class="fa-regular fa-eye"></i>
@@ -68,9 +68,16 @@
             </c:forEach>
         </tbody>
     </table>
-    <security:authorize access="hasRole('ROLE_MODERATOR')">
-        <a href="${UrlRoute.URL_GAME_NEW}">Nouveau jeu</a>
-    </security:authorize>
+    <div class="d-flex justify-content-between">
+        <span>
+            <security:authorize access="hasRole('ROLE_MODERATOR')">
+                <a href="${UrlRoute.URL_GAME_NEW}">Nouveau jeu</a>
+            </security:authorize>
+        </span>
+
+        <span>Total page ${games.totalPages}</span>
+        <span></span>
+    </div>
 </div>
 ${jspUtils.getPagination(games, currentUrl, currentQuery)}
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

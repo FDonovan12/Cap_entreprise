@@ -4,6 +4,7 @@ import fr.donovan.cap_entreprise.entity.Classification;
 import fr.donovan.cap_entreprise.DTO.ClassificationDTO;
 import fr.donovan.cap_entreprise.service.ClassificationService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class ClassificationController {
 
     private final ClassificationService classificationService;
 
+    private final ReviewService reviewService;
+
     @GetMapping(path = UrlRoute.URL_CLASSIFICATION)
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("classification/index");
@@ -35,6 +38,7 @@ public class ClassificationController {
 
         mav.setViewName("classification/show");
         mav.addObject("classification", classification);
+        mav.addObject("games_rating", reviewService.getRatingOfGames(classification.getGames()));
         return mav;
     }
 

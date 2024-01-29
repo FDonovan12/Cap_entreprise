@@ -1,8 +1,10 @@
 package fr.donovan.cap_entreprise.controller;
+import fr.donovan.cap_entreprise.entity.Game;
 import fr.donovan.cap_entreprise.entity.Publisher;
 import fr.donovan.cap_entreprise.DTO.PublisherDTO;
 import fr.donovan.cap_entreprise.service.PublisherService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,8 @@ public class PublisherController {
 
     private final PublisherService publisherService;
 
+    private final ReviewService reviewService;
+
     @GetMapping(path = UrlRoute.URL_PUBLISHER)
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("publisher/index");
@@ -34,6 +38,7 @@ public class PublisherController {
 
         mav.setViewName("publisher/show");
         mav.addObject("publisher", publisher);
+        mav.addObject("games_rating", reviewService.getRatingOfGames(publisher.getGames()));
         return mav;
     }
 

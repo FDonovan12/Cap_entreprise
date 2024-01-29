@@ -1,6 +1,7 @@
 package fr.donovan.cap_entreprise.entity;
 import com.fasterxml.jackson.annotation.JsonView;
 import fr.donovan.cap_entreprise.entity.interfaces.EntityInterface;
+import fr.donovan.cap_entreprise.entity.interfaces.NomenclatureInterface;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Publisher implements EntityInterface {
+public class Publisher implements EntityInterface, NomenclatureInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

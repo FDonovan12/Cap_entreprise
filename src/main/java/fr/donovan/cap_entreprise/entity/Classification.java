@@ -2,6 +2,7 @@ package fr.donovan.cap_entreprise.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import fr.donovan.cap_entreprise.entity.interfaces.EntityInterface;
+import fr.donovan.cap_entreprise.entity.interfaces.NomenclatureInterface;
 import fr.donovan.cap_entreprise.entity.interfaces.SluggerInterface;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Classification implements EntityInterface {
+public class Classification implements EntityInterface, NomenclatureInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

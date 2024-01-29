@@ -81,12 +81,13 @@ public class JspUtils {
         }
         result += "</div></div>";
 
-        result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
-        int nbPage = Math.min(9, totalPage/2);
-        for (int i = 1; i <= nbPage; i++) {
-            result += getLinkPage(format,"pageable", url, currentQuery, (int)(i*totalPage/(nbPage+1)), (int)(i*totalPage/(nbPage+1))+"");
-        }
-        result += "</div></div>";
+//        result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
+//        int nbPage = Math.min(9, totalPage/2);
+//        for (int i = 1; i <= nbPage; i++) {
+//            result += getLinkPage(format,"pageable", url, currentQuery, (int)(i*totalPage/(nbPage+1)), (int)(i*totalPage/(nbPage+1))+"");
+//        }
+//        result += "</div></div>";
+
         return result;
     }
 
@@ -146,7 +147,7 @@ public class JspUtils {
                 if (!uri.toUriString().contains(queryParamName + "=" + queryParamValue)) {
                     replacement = "sort=" + queryAttribute + ",desc";
                     if (queryParamValue.contains("asc")) {
-                        replacement = "sort=" + queryAttribute + ",desc";
+                        replacement = "sort=" + queryAttribute + ",asc";
                     }
                 }
                 uri = UriComponentsBuilder.fromHttpUrl(
@@ -160,6 +161,7 @@ public class JspUtils {
     }
 
     public String getStringRating(float rating) {
+        rating = (float) Math.round(rating * 100) /100;
         return ("" + rating).replaceAll(".0$", "");
     }
 }

@@ -4,6 +4,7 @@ import fr.donovan.cap_entreprise.entity.BusinessModel;
 import fr.donovan.cap_entreprise.DTO.BusinessModelDTO;
 import fr.donovan.cap_entreprise.service.BusinessModelService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class BusinessModelController {
 
     private final BusinessModelService businessModelService;
 
+    private final ReviewService reviewService;
+
     @GetMapping(path = UrlRoute.URL_BUSINESSMODEL)
     public ModelAndView index(ModelAndView mav) {
         mav.setViewName("businessModel/index");
@@ -35,6 +38,7 @@ public class BusinessModelController {
 
         mav.setViewName("businessModel/show");
         mav.addObject("businessModel", businessModel);
+        mav.addObject("games_rating", reviewService.getRatingOfGames(businessModel.getGames()));
         return mav;
     }
 
