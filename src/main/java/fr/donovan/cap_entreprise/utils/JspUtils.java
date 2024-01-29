@@ -95,8 +95,8 @@ public class JspUtils {
         return String.format(format, cssClass, newUrl, character);
     }
 
-    public String getRainbow(int number) {
-        String result = "background: linear-gradient(0.2turn";
+    public String getRainbow(int number, String method) {
+        String result = "style=\"background: linear-gradient(" + method;
         for (int i = 0; i < number; i++) {
             int current = number/3;
             int red = (int)(Math.random()*256);
@@ -104,7 +104,7 @@ public class JspUtils {
             int blue = (int)(Math.random()*256);
             result += String.format(", rgb(%d,%d,%d)", red, green, blue);
         }
-        return result+") !important";
+        return result+") !important\"";
     }
 
     public String getUrlFrom(String currentUrl, String currentQuery, String newSort) {
@@ -140,16 +140,26 @@ public class JspUtils {
         }
         
         if (queryParamName.equals("sort")) {
-            if (uri.toUriString().contains(queryParamName + "=" + queryParamValue.split(",")[0] + ",")) {
-                return UriComponentsBuilder.fromHttpUrl(
+            String queryAttribute = queryParamValue.split(",")[0];
+            if (uri.toUriString().contains(queryParamName + "=" + queryAttribute + ",")) {
+                String replacement = "";
+                if (!uri.toUriString().contains(queryParamName + "=" + queryParamValue)) {
+                    replacement = "sort=" + queryAttribute + ",desc";
+                    if (queryParamValue.contains("asc")) {
+                        replacement = "sort=" + queryAttribute + ",desc";
+                    }
+                }
+                uri = UriComponentsBuilder.fromHttpUrl(
                         uri.toUriString()
-                                .replaceAll(queryParamName + "=" + queryParamValue.split(",")[0] + ",(asc|desc)",
-                                        queryParamName + "=" + queryParamValue));
-            } else {
-                return uri.queryParam(queryParamName, queryParamValue);
+                                .replaceAll("sort=" + queryAttribute + ",(asc|desc)", replacement));
+                return uri;
             }
+            return uri.queryParam(queryParamName, queryParamValue);
         }
         return uri;
     }
 
+    public String getStringRating(float rating) {
+        return ("" + rating).replaceAll(".0$", "");
+    }
 }

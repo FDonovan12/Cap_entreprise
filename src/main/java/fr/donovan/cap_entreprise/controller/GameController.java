@@ -8,6 +8,9 @@ import fr.donovan.cap_entreprise.mapping.UrlRoute;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -38,9 +41,13 @@ public class GameController {
     private final BusinessModelService businessModelService;
 
     @GetMapping(path = UrlRoute.URL_GAME)
-    public ModelAndView index(ModelAndView mav) {
+    public ModelAndView index(ModelAndView mav, @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "publishedAt" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         mav.setViewName("game/index");
-        mav.addObject("games", gameService.findAll());
+        mav.addObject("games", gameService.findAll(pageable));
         return mav;
     }
 

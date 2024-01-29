@@ -6,22 +6,18 @@
 <h1>Tous les jeux</h1>
 <div class="col-12">
     <div class="d-flex">
-        <c:set var="label" scope="request" value="Date"/>
-        <c:set var="sortable" value="createdAt"/>
-        <%@ include file="../component/sortable.jsp" %>
-        <%--        <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/sortable.jsp"/>--%>
 
-        <c:set var="label" scope="request" value="Note"/>
-        <c:set var="sortable" value="rating"/>
-        <%@ include file="../component/sortable.jsp" %>
+<%--        <c:set var="label" scope="request" value="Note"/>--%>
+<%--        <c:set var="sortable" value="rating"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
 
-        <c:set var="label" scope="request" value="Jeu"/>
-        <c:set var="sortable" value="game.name"/>
-        <%@ include file="../component/sortable.jsp" %>
+<%--        <c:set var="label" scope="request" value="Jeu"/>--%>
+<%--        <c:set var="sortable" value="game.name"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
 
-        <c:set var="label" scope="request" value="Joueur"/>
-        <c:set var="sortable" value="gamer.nickname"/>
-        <%@ include file="../component/sortable.jsp" %>
+<%--        <c:set var="label" scope="request" value="Joueur"/>--%>
+<%--        <c:set var="sortable" value="gamer.nickname"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
 
         <span class="mt-auto mb-2">
             <a href="${currentUrl}" class="btn-link">
@@ -32,19 +28,27 @@
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
         <thead>
             <tr>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Nom</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Editeur</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>image</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Operation</td>
+                <td ${rainbowStyleVery}>
+                    <c:set var="label" scope="request" value="Nom"/>
+                    <c:set var="sortable" value="name"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td ${rainbowStyleVery}>
+                    <c:set var="label" scope="request" value="Editeur"/>
+                    <c:set var="sortable" value="publisher.name"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td ${rainbowStyleVery}>image</td>
+                <td ${rainbowStyleVery}>Operation</td>
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${games}" var="game">
+            <c:forEach items="${games.content}" var="game">
                 <tr>
-                    <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${game.name}</td>
-                    <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${game.publisher.name}</td>
-                    <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${game.image}</td>
-                    <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>
+                    <td ${rainbowStyleVery}>${game.name}</td>
+                    <td ${rainbowStyleVery}>${game.publisher.name}</td>
+                    <td ${rainbowStyleVery}>${game.image}</td>
+                    <td ${rainbowStyleVery}>
                         <a class="btn btn-secondary" href="${UrlRoute.URL_GAME}/${game.id}">
                             <i class="fa-regular fa-eye"></i>
                         </a>
@@ -68,5 +72,5 @@
         <a href="${UrlRoute.URL_GAME_NEW}">Nouveau jeu</a>
     </security:authorize>
 </div>
-
+${jspUtils.getPagination(games, currentUrl, currentQuery)}
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

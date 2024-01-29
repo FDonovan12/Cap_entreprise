@@ -5,6 +5,8 @@ import fr.donovan.cap_entreprise.repository.GameRepository;
 import fr.donovan.cap_entreprise.DTO.GameDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,18 +18,21 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static fr.donovan.cap_entreprise.mapping.UrlRoute.*;
+
 @AllArgsConstructor
 @Service
 public class GameService implements DAOServiceInterface<Game> {
 
     private GameRepository gameRepository;
 
-    private static final String DIR_PATH = "src/main/webapp";
-
-    private static final String PATH = "/resources/image/";
 
     public List<Game> findAll() {
         return this.gameRepository.findAll();
+    }
+
+    public Page<Game> findAll(Pageable pageable) {
+        return this.gameRepository.findAll(pageable);
     }
 
 
@@ -99,7 +104,7 @@ public class GameService implements DAOServiceInterface<Game> {
 
     public String upload(String path, MultipartFile file) {
         try {
-            File dir = new File(DIR_PATH + PATH + path);
+            File dir = new File(DIR_PATH + PATH_IMAGE + path);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -107,7 +112,7 @@ public class GameService implements DAOServiceInterface<Game> {
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
             stream.write(file.getBytes());
             stream.close();
-            return PATH + path + file.getOriginalFilename();
+            return PATH_IMAGE + path + file.getOriginalFilename();
         } catch (IOException e) {
             System.out.println("Failed.");
             return "Error : Something goes wrong...";

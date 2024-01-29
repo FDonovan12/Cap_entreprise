@@ -21,7 +21,7 @@
     </c:if>
     <h2 class="mb-3 mt-5">Commentaire</h2>
     <p class="mb-3">${review.description}</p>
-    <p>${review.rating}</p>
+    <p>${jspUtils.getStringRating(review.rating)}</p>
 </div>
 
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

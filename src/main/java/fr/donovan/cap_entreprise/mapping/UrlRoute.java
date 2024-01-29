@@ -10,4 +10,11 @@ public class UrlRoute implements
     public static final String URL_REGISTER = "/register";
     public static final String URL_ADMIN = "/admin";
 
+    public static final String URL_EXPORT = "/telecharger-export-excel";
+
+    public static final String DIR_PATH = "src/main/webapp";
+
+    public static final String PATH_IMAGE = "/resources/image/";
+
+    public static final String PATH_EXCEL = "/resources/image/";
 }

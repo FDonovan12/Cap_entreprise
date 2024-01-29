@@ -30,6 +30,7 @@ public class SecurityController {
             BindingResult bindingResult,
             ModelAndView mav
     ) {
+        System.out.println("SecurityController.register");
         if (bindingResult.hasErrors()) {
             mav.setViewName("security/register");
             return mav;

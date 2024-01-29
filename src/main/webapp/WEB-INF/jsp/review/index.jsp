@@ -6,22 +6,22 @@
 <h1>Tous les avis</h1>
 <div class="col-12">
     <div class="d-flex">
-        <c:set var="label" scope="request" value="Date"/>
-        <c:set var="sortable" value="createdAt"/>
-        <%@ include file="../component/sortable.jsp" %>
-<%--        <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/sortable.jsp"/>--%>
+<%--        <c:set var="label" scope="request" value="Date"/>--%>
+<%--        <c:set var="sortable" value="createdAt"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
+<%--&lt;%&ndash;        <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/sortable.jsp"/>&ndash;%&gt;--%>
 
-        <c:set var="label" scope="request" value="Note"/>
-        <c:set var="sortable" value="rating"/>
-        <%@ include file="../component/sortable.jsp" %>
+<%--        <c:set var="label" scope="request" value="Note"/>--%>
+<%--        <c:set var="sortable" value="rating"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
 
-        <c:set var="label" scope="request" value="Jeu"/>
-        <c:set var="sortable" value="game.name"/>
-        <%@ include file="../component/sortable.jsp" %>
+<%--        <c:set var="label" scope="request" value="Jeu"/>--%>
+<%--        <c:set var="sortable" value="game.name"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
 
-        <c:set var="label" scope="request" value="Joueur"/>
-        <c:set var="sortable" value="gamer.nickname"/>
-        <%@ include file="../component/sortable.jsp" %>
+<%--        <c:set var="label" scope="request" value="Joueur"/>--%>
+<%--        <c:set var="sortable" value="gamer.nickname"/>--%>
+<%--        <%@ include file="../component/sortable.jsp" %>--%>
 
         <span class="mt-auto mb-2">
             <a href="${currentUrl}" class="btn-link">
@@ -32,22 +32,39 @@
     <table class="table table-dark table-hover <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if>">
         <thead>
             <tr>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Date de creation</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Jeu</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Joueur</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Note</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Statut</td>
-                <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>Operation</td>
+                <td ${rainbowStyleVery}>
+<%--                    Date de creation--%>
+                    <c:set var="label" scope="request" value="Date de creation"/>
+                    <c:set var="sortable" value="createdAt"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td ${rainbowStyleVery}>
+                    <c:set var="label" scope="request" value="Jeu"/>
+                    <c:set var="sortable" value="game.name"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td ${rainbowStyleVery}>
+                    <c:set var="label" scope="request" value="Joueur"/>
+                    <c:set var="sortable" value="gamer.nickname"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td ${rainbowStyleVery}>
+                    <c:set var="label" scope="request" value="Note"/>
+                    <c:set var="sortable" value="rating"/>
+                    <%@ include file="../component/sortable.jsp" %>
+                </td>
+                <td ${rainbowStyleVery}>Statut</td>
+                <td ${rainbowStyleVery}>Operation</td>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${pageReviews.content}" var="review">
                     <tr>
-                        <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${dateUtils.getDateFormat(review.createdAt, "dd MMMM yyyy à hh:mm")}</td>
-                        <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${review.game.name}</td>
-                        <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${review.gamer.nickname}</td>
-                        <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>${review.rating}</td>
-                        <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>
+                        <td ${rainbowStyleVery}>${dateUtils.getDateFormat(review.createdAt, "dd MMMM yyyy à hh:mm")}</td>
+                        <td ${rainbowStyleVery}>${review.game.name}</td>
+                        <td ${rainbowStyleVery}>${review.gamer.nickname}</td>
+                        <td ${rainbowStyleVery}>${jspUtils.getStringRating(review.rating)}</td>
+                        <td ${rainbowStyleVery}>
                             <c:choose>
                                 <c:when test="${review.moderator == null}">
                                     A moderer
@@ -57,7 +74,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td <c:if test="${userLogged.veryEccentric}">style="${jspUtils.getRainbow(500)}"</c:if>>
+                        <td ${rainbowStyleVery}>
                             <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW}/${review.id}">
                                 <i class="fa-regular fa-eye"></i>
                             </a>
@@ -77,6 +94,12 @@
         </tbody>
     </table>
 </div>
+<div class="d-flex justify-content-between">
     <a href="${UrlRoute.URL_REVIEW_NEW}">Nouveau commentaire</a>
+    <a href="${UrlRoute.URL_EXPORT}" class="btn btn-link">
+        <i class="fa-solid fa-file-excel me-1"></i>
+        Télécharger export Excel
+    </a>
+</div>
     ${jspUtils.getPagination(pageReviews, currentUrl, currentQuery)}
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

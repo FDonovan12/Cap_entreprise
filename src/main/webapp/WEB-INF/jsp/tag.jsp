@@ -11,6 +11,7 @@
 <%@ page import="fr.donovan.cap_entreprise.utils.JspUtils" %>
 <%@ page import="fr.donovan.cap_entreprise.service.UserService" %>
 <%@ page import="fr.donovan.cap_entreprise.entity.User" %>
+<c:set var="nbRainbow" value="50"/>
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
     String path = request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI).toString();
@@ -28,9 +29,21 @@
         request.setAttribute("dateUtils", ctx.getBean(DateUtils.class));
         request.setAttribute("jspUtils", ctx.getBean(JspUtils.class));
     }
-        UserService userService = ctx.getBean(UserService.class);
-        if (request.getUserPrincipal() != null) {
-            User user = userService.getObjectByNickname(request.getUserPrincipal().getName());
-            request.setAttribute("userLogged", user);
-        }
+    User user = null;
+    UserService userService = ctx.getBean(UserService.class);
+    if (request.getUserPrincipal() != null) {
+        user = userService.getObjectByNickname(request.getUserPrincipal().getName());
+        request.setAttribute("userLogged", user);
+    }
+
+    JspUtils jspUtils = new JspUtils();
+    String rainbow = jspUtils.getRainbow(10, "150deg");
+
+    if (user != null && user.isVeryEccentric()) {
+        request.setAttribute("rainbowStyleVery", rainbow);
+    }
+
+    if (user != null && user.isEccentric()) {
+        request.setAttribute("rainbowStyle", rainbow);
+    }
 %>

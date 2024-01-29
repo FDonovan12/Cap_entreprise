@@ -76,8 +76,10 @@
             <f:errors path="platforms" cssClass="invalid-feedback"/>
         </div>
     </div>
-    <f:button class="btn btn-secondary" type="reset">Reset</f:button>
-    <f:button class="btn btn-primary">Submit</f:button>
+<%--    <f:button class="btn btn-secondary" type="reset">Reset</f:button>--%>
+<%--    <f:button class="btn btn-primary">Submit</f:button>--%>
+    <f:button class="btn btn-lg btn-success" type="submit">Submit</f:button>
+    <f:button class="btn btn-lg btn-danger" type="reset">Reset</f:button>
 </f:form>
 
 
