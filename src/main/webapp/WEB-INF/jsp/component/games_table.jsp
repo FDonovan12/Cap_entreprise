@@ -10,7 +10,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <p>${game.name}</p>
-                    <p>${jspUtils.getStringRating(games_rating.get(count))}</p>
+                    <p>${jspUtils.getStringRating(reviewService.getRatingByGame(game))}</p>
                 </div>
             </div>
         </a>

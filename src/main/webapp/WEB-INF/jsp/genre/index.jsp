@@ -28,24 +28,24 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${platforms}" var="platform">
+            <c:forEach items="${genres}" var="genre">
                 <tr>
-<%--                    <td ${rainbowStyleVery}><img height="100" src="${platform.image}"></td>--%>
-                    <td ${rainbowStyleVery}>${platform.name}</td>
-                    <td width="100" ${rainbowStyleVery}>${platform.games.size()}</td>
-                    <td width="100" ${rainbowStyleVery}>${jspUtils.getStringRating(reviewService.getRatingByObject(platform))}</td>
+<%--                    <td ${rainbowStyleVery}><img height="100" src="${genre.image}"></td>--%>
+                    <td ${rainbowStyleVery}>${genre.name}</td>
+                    <td ${rainbowStyleVery}>${genre.games.size()}</td>
+                    <td ${rainbowStyleVery}>${jspUtils.getStringRating(reviewService.getRatingByObject(genre))}</td>
                     <td width="200" ${rainbowStyleVery}>
-                        <a class="btn btn-secondary" href="${UrlRoute.URL_PLATFORM}/${platform.id}">
+                        <a class="btn btn-secondary" href="${UrlRoute.URL_GENRE}/${genre.id}">
                             <i class="fa-regular fa-eye"></i>
                         </a>
                         <security:authorize access="hasRole('ROLE_MODERATOR')">
-                            <a class="btn btn-success" href="${UrlRoute.URL_PLATFORM_EDIT}/${platform.id}">
+                            <a class="btn btn-success" href="${UrlRoute.URL_GENRE_EDIT}/${genre.id}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-<%--                            <a class="btn btn-danger" href="${UrlRoute.URL_PLATFORM_DELETE}/${platform.id}">--%>
+<%--                            <a class="btn btn-danger" href="${UrlRoute.URL_GENRE_DELETE}/${genre.id}">--%>
 <%--                                <i class="fa-regular fa-trash-can"></i>--%>
 <%--                            </a>--%>
-<%--                            <a class="btn btn-success" href="${UrlRoute.URL_PLATFORM_UPLOAD}/${platform.id}">--%>
+<%--                            <a class="btn btn-success" href="${UrlRoute.URL_GENRE_UPLOAD}/${genre.id}">--%>
 <%--                                <i class="fa-regular fa-image"></i>--%>
 <%--                            </a>--%>
                         </security:authorize>
@@ -54,13 +54,13 @@
             </c:forEach>
         </tbody>
     </table>
-    <security:authorize access="hasRole('ROLE_MODERATOR')">
-        <div class="d-flex justify-content-between">
-            <span>
-                <a href="${UrlRoute.URL_PLATFORM_NEW}">Nouvelle platforme</a>
-            </span>
-        </div>
-    </security:authorize>
+    <div class="d-flex justify-content-between">
+        <span>
+            <security:authorize access="hasRole('ROLE_MODERATOR')">
+                <a href="${UrlRoute.URL_GENRE_NEW}">Nouveau genre</a>
+            </security:authorize>
+        </span>
+    </div>
 </div>
 <%--${jspUtils.getPagination(re, currentUrl, currentQuery)}--%>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

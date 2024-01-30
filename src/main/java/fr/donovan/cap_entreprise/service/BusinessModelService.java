@@ -49,6 +49,7 @@ public class BusinessModelService implements DAOServiceInterface<BusinessModel> 
         if (id != null) {
             businessModel = getObjectById(id);
         }
+        businessModel.setName(businessModelDTO.getName());
 
         return businessModelRepository.saveAndFlush(businessModel);
     }

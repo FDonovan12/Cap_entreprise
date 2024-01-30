@@ -130,7 +130,7 @@ public class ReviewController {
         return formHandle(result, mav, reviewDTO, null, principal);
     }
 
-    @PutMapping(path = UrlRoute.URL_REVIEW_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_REVIEW_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("review") ReviewDTO reviewDTO,
             BindingResult result,

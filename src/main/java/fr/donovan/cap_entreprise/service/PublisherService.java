@@ -49,6 +49,7 @@ public class PublisherService implements DAOServiceInterface<Publisher> {
         if (id != null) {
             publisher = getObjectById(id);
         }
+        publisher.setName(publisherDTO.getName());
 
         return publisherRepository.saveAndFlush(publisher);
     }
@@ -56,7 +57,7 @@ public class PublisherService implements DAOServiceInterface<Publisher> {
     public PublisherDTO getDTOById(Long id) {
         Publisher publisher = getObjectById(id);
         PublisherDTO dto = new PublisherDTO();
-        // dto.setName(publisher.getName());
+        dto.setName(publisher.getName());
         return dto;
     }
 }

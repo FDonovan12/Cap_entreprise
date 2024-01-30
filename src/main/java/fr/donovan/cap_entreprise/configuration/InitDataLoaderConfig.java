@@ -68,7 +68,7 @@ public class InitDataLoaderConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws IOException {
-        initKevin();
+//        initKevin();
         System.out.println("InitDataLoaderConfig.run");
     }
 
@@ -248,10 +248,13 @@ public class InitDataLoaderConfig implements CommandLineRunner {
                 String name;
                 do {
                     name = Slugger.slugify(faker.funnyName().name().replace(" ", ""));
+                    if(i == 1) {
+                        name = "chloe";
+                    }
                 } while (names.contains(name));
                 names.add(name);
                 user.setNickname(name);
-                user.setEmail(faker.internet().safeEmailAddress());
+                user.setEmail(name + "@gmail.com");
                 user.setPassword(passwordEncoder.encode("12345"));
                 userRepository.save(user);
             }

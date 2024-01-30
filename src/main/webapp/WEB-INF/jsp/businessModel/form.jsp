@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
-<c:set var="title" scope="request" value="formulaire de platforme"/>
+<c:set var="title" scope="request" value="formulaire de modele economique"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<h1>Formulaire de platforme</h1>
-<f:form modelAttribute="platform" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
+<h1>Formulaire de modele economique</h1>
+<f:form modelAttribute="businessModel" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
     <div class="mb-3 row">
         <f:label path="name" class="col-sm-2 col-form-label">Nom</f:label>
         <div class="col-sm-10 mb-3">

@@ -3,7 +3,7 @@
 <c:set var="title" scope="request" value="formulaire de jeu"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<form method="POST" action="${action}" enctype="multipart/form-data">
+<form method="POST" action="${currentUrl}" enctype="multipart/form-data">
     <label>Choose a file :</label>
     <input type="file" name="file" />
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -49,6 +49,8 @@ public class PlatformService implements DAOServiceInterface<Platform> {
         if (id != null) {
             platform = getObjectById(id);
         }
+        platform.setName(platformDTO.getName());
+        platform.setImage(platformDTO.getImage());
 
         return platformRepository.saveAndFlush(platform);
     }
@@ -56,7 +58,8 @@ public class PlatformService implements DAOServiceInterface<Platform> {
     public PlatformDTO getDTOById(Long id) {
         Platform platform = getObjectById(id);
         PlatformDTO dto = new PlatformDTO();
-        // dto.setName(platform.getName());
+        dto.setName(platform.getName());
+        dto.setImage(platform.getImage());
         return dto;
     }
 }

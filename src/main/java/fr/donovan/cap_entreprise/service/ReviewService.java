@@ -4,6 +4,7 @@ import fr.donovan.cap_entreprise.entity.*;
 import fr.donovan.cap_entreprise.repository.ReviewRepository;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
+import jakarta.transaction.NotSupportedException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,12 +35,31 @@ public class ReviewService implements DAOServiceInterface<Review> {
         return  reviewRepository.findAll(pageable);
     }
 
-    public double getRatingOfGame(Game game) {
-        return reviewRepository.getRatingOfGame(game);
+    public double getRatingByGame(Game game) {
+        return reviewRepository.getRatingByGame(game);
     }
 
     public List<Double> getRatingOfGames(List<Game> games) {
         return reviewRepository.getRatingOfGames(games);
+    }
+
+    public Double getRatingByObject(Object object) {
+        if (object instanceof Genre cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        if (object instanceof Publisher cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        if (object instanceof Platform cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        if (object instanceof Classification cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        if (object instanceof BusinessModel cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        throw new NotFoundCapEntrepriseException("Review", "rating", object);
     }
 
     public Review getByField(String field) {

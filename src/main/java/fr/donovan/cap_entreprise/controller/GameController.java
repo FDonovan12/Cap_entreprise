@@ -97,7 +97,7 @@ public class GameController {
         return formHandle(result, mav, gameDTO, null, principal);
     }
 
-    @PutMapping(path = UrlRoute.URL_GAME_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_GAME_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("game") GameDTO gameDTO,
             BindingResult result,
@@ -112,7 +112,6 @@ public class GameController {
     public ModelAndView fileUpload(ModelAndView mav, HttpServletRequest httpServletRequest, @PathVariable Long id) {
         mav.setViewName("game/image");
         mav.addObject("action", httpServletRequest.getRequestURI());
-        System.out.println("httpServletRequest = " + httpServletRequest.getRequestURI());
         return mav;
     }
 

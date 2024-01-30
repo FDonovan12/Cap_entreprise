@@ -21,4 +21,6 @@ public class PlatformDTO {
     @NotBlank(message = "This should be a valid name")
     private String name;
 
+    private String image;
+
 }

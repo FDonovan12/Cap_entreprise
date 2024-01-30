@@ -6,6 +6,7 @@
 <div>
     <div class="d-flex">
         <h1 class="mb-2">${platform.name}</h1>
+        <div class="ps-3 fs-3">${jspUtils.getStringRating(reviewService.getRatingByObject(platform))}</div>
         <img class="img-fluid" src="${platform.image}"  alt="">
     </div>
     <div>
@@ -17,12 +18,9 @@
                 <i class="fa-regular fa-trash-can"></i>
             </a>
         </security:authorize>
-        <h2 class="mb-3 mt-5">Description</h2>
-        <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW_NEW}/${platform.id}">Laisser un avis sur ce jeu</a>
     </div>
     <c:set var="games" scope="request" value="${platform.games}"/>
     <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/games_table.jsp"/>
-<%--    <%@ include file="../component/games_table.jsp" %>--%>
 </div>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>
 

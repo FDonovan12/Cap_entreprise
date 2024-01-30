@@ -4,7 +4,7 @@
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
 <h1>Donnez votre avis</h1>
-<f:form modelAttribute="review" method="post" action="${action}" cssClass="p-5">
+<f:form modelAttribute="review" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
     <div class="mb-3 row">
         <f:label path="description" class="col-sm-2 col-form-label">Description</f:label>
         <div class="col-sm-10 mb-3">

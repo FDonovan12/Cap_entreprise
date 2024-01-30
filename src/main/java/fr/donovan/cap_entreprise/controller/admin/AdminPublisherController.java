@@ -66,7 +66,7 @@ public class AdminPublisherController {
         return formHandle(result, mav, publisherDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_PUBLISHER_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_PUBLISHER_EDIT + "/{id}")
     public ModelAndView formHandler(
         @Valid @ModelAttribute("publisher") PublisherDTO publisherDTO,
         BindingResult result,

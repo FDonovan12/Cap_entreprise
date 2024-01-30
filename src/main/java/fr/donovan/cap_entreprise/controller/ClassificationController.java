@@ -78,7 +78,7 @@ public class ClassificationController {
         return formHandle(result, mav, classificationDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_CLASSIFICATION_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_CLASSIFICATION_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("classification") ClassificationDTO classificationDTO,
             BindingResult result,

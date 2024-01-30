@@ -11,6 +11,7 @@
 <%@ page import="fr.donovan.cap_entreprise.utils.JspUtils" %>
 <%@ page import="fr.donovan.cap_entreprise.service.UserService" %>
 <%@ page import="fr.donovan.cap_entreprise.entity.User" %>
+<%@ page import="fr.donovan.cap_entreprise.service.ReviewService" %>
 <c:set var="nbRainbow" value="50"/>
 <%
     String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
@@ -31,13 +32,16 @@
     }
     User user = null;
     UserService userService = ctx.getBean(UserService.class);
+    ReviewService reviewService = ctx.getBean(ReviewService.class);
+    request.setAttribute("reviewService", reviewService);
+
     if (request.getUserPrincipal() != null) {
         user = userService.getObjectByNickname(request.getUserPrincipal().getName());
         request.setAttribute("userLogged", user);
     }
 
     JspUtils jspUtils = new JspUtils();
-    String rainbow = jspUtils.getRainbow(10, "150deg");
+    String rainbow = jspUtils.getRainbow(500, "150deg", 10);
 
     if (user != null && user.isVeryEccentric()) {
         request.setAttribute("rainbowStyleVery", rainbow);

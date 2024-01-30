@@ -67,7 +67,7 @@ public class AdminReviewController {
         return formHandle(result, mav, reviewDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_REVIEW_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_REVIEW_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("review") ReviewDTO reviewDTO,
             BindingResult result,

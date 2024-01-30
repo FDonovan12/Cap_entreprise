@@ -108,7 +108,6 @@
 </div>
 <div class="d-flex justify-content-between">
     <a href="${UrlRoute.URL_REVIEW_NEW}">Nouveau commentaire</a>
-    <span class="my-auto">Total page ${pageReviews.totalPages}</span>
     <a href="${UrlRoute.URL_EXPORT}" class="btn btn-link">
         <i class="fa-solid fa-file-excel me-1"></i>
         Télécharger export Excel

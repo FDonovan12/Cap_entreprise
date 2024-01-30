@@ -10,11 +10,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 @RequestMapping
@@ -39,6 +36,7 @@ public class GenreController {
         mav.setViewName("genre/show");
         mav.addObject("genre", genre);
         mav.addObject("games_rating", reviewService.getRatingOfGames(genre.getGames()));
+        mav.addObject("rating", reviewService.getRatingByObject(genre));
         return mav;
     }
 
@@ -78,7 +76,7 @@ public class GenreController {
         return formHandle(result, mav, genreDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_GENRE_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_GENRE_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("genre") GenreDTO genreDTO,
             BindingResult result,

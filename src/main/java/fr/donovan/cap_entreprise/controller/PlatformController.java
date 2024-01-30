@@ -78,7 +78,7 @@ public class PlatformController {
         return formHandle(result, mav, platformDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_PLATFORM_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_PLATFORM_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("platform") PlatformDTO platformDTO,
             BindingResult result,

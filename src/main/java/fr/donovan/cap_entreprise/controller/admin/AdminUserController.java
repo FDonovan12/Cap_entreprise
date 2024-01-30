@@ -67,7 +67,7 @@ public class AdminUserController {
         return formHandle(result, mav, userDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_USER_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_USER_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("user") UserDTO userDTO,
             BindingResult result,

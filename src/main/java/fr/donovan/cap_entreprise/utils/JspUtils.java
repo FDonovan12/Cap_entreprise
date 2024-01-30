@@ -1,5 +1,6 @@
 package fr.donovan.cap_entreprise.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,9 @@ public class JspUtils {
         }
         result += "</div></div>";
 
+        result += "<div class=\"d-flex justify-content-around\"><div>Total page " + totalPage + "</div>";
+        result += "<div>Total element " + page.getTotalElements() + "</div></div>";
+
 //        result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
 //        int nbPage = Math.min(9, totalPage/2);
 //        for (int i = 1; i <= nbPage; i++) {
@@ -96,16 +100,30 @@ public class JspUtils {
         return String.format(format, cssClass, newUrl, character);
     }
 
-    public String getRainbow(int number, String method) {
+    public String getRainbow(int number, String method, double duration) {
+        System.out.println("Integer.toHexString(16) = " + Integer.toHexString(16));
+        System.out.println("Integer.toHexString(160) = " + Integer.toHexString(160));
         String result = "style=\"background: linear-gradient(" + method;
         for (int i = 0; i < number; i++) {
             int current = number/3;
-            int red = (int)(Math.random()*256);
-            int green = (int)(Math.random()*256);
-            int blue = (int)(Math.random()*256);
-            result += String.format(", rgb(%d,%d,%d)", red, green, blue);
+
+            int redInt = (int)(Math.random()*256);
+            int greenInt = (int)(Math.random()*256);
+            int blueInt = (int)(Math.random()*256);
+
+            String red = StringUtils.leftPad(Integer.toHexString(redInt), 2, '0');
+            String green = StringUtils.leftPad(Integer.toHexString(greenInt), 2, '0');
+            String blue = StringUtils.leftPad(Integer.toHexString(blueInt), 2, '0');
+
+            if (red.length() <2 || green.length() <2 || blue.length() <2) {
+                System.out.println("red + green + blue = " + red + " " + green + " " + blue);
+                System.out.println("int red + green + blue = " + redInt + " " + greenInt + " " + blueInt);
+            }
+//            result += String.format(", rgb(%d,%d,%d)", red, green, blue);
+//            result += ", #ee7752, #e73c7e, #23a6d5, #23d5ab";
+            result += String.format(", #%s%s%s", red, green, blue);
         }
-        return result+") !important\"";
+        return result+"); background-size: 400% 400%; animation: gradient "+duration+"s ease infinite\"";
     }
 
     public String getUrlFrom(String currentUrl, String currentQuery, String newSort) {

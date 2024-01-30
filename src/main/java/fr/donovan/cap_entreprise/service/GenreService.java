@@ -49,6 +49,7 @@ public class GenreService implements DAOServiceInterface<Genre> {
         if (id != null) {
             genre = getObjectById(id);
         }
+        genre.setName(genreDTO.getName());
 
         return genreRepository.saveAndFlush(genre);
     }
@@ -56,7 +57,7 @@ public class GenreService implements DAOServiceInterface<Genre> {
     public GenreDTO getDTOById(Long id) {
         Genre genre = getObjectById(id);
         GenreDTO dto = new GenreDTO();
-        // dto.setName(genre.getName());
+        dto.setName(genre.getName());
         return dto;
     }
 }

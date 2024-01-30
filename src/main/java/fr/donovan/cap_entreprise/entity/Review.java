@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -35,7 +36,6 @@ public class Review implements EntityInterface {
     private float rating;
 
     @UpdateTimestamp
-    @Column(nullable = false)
     private LocalDateTime moderatedAt;
 
     @ManyToOne

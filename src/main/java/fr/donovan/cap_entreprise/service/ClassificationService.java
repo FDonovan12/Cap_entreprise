@@ -49,6 +49,7 @@ public class ClassificationService implements DAOServiceInterface<Classification
         if (id != null) {
             classification = getObjectById(id);
         }
+        classification.setName(classificationDTO.getName());
 
         return classificationRepository.saveAndFlush(classification);
     }
@@ -56,7 +57,7 @@ public class ClassificationService implements DAOServiceInterface<Classification
     public ClassificationDTO getDTOById(Long id) {
         Classification classification = getObjectById(id);
         ClassificationDTO dto = new ClassificationDTO();
-        // dto.setName(classification.getName());
+        dto.setName(classification.getName());
         return dto;
     }
 }

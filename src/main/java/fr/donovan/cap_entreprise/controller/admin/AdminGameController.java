@@ -67,7 +67,7 @@ public class AdminGameController {
         return formHandle(result, mav, gameDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_GAME_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_GAME_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("game") GameDTO gameDTO,
             BindingResult result,

@@ -67,7 +67,7 @@ public class AdminBusinessModelController {
         return formHandle(result, mav, businessModelDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_BUSINESSMODEL_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_BUSINESSMODEL_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("businessModel") BusinessModelDTO businessModelDTO,
             BindingResult result,

@@ -67,7 +67,7 @@ public class AdminPlatformController {
         return formHandle(result, mav, platformDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_PLATFORM_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_PLATFORM_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("platform") PlatformDTO platformDTO,
             BindingResult result,

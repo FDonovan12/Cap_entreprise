@@ -67,7 +67,7 @@ public class AdminGenreController {
         return formHandle(result, mav, genreDTO, null);
     }
 
-    @PutMapping(path = UrlRoute.URL_ADMIN_GENRE_EDIT + "/{id}")
+    @PostMapping(path = UrlRoute.URL_ADMIN_GENRE_EDIT + "/{id}")
     public ModelAndView formHandler(
             @Valid @ModelAttribute("genre") GenreDTO genreDTO,
             BindingResult result,

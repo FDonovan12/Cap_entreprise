@@ -3,7 +3,10 @@
 <c:set var="title" scope="request" value="${game.name}"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<h1 class="mb-2">${game.name}</h1>
+<div class="d-flex">
+    <h1 class="mb-2">${game.name}</h1>
+    <div class="ps-3 fs-3">${jspUtils.getStringRating(rating)}</div>
+</div>
 <div class="row">
 <%--    <div class="col-1"></div>--%>
     <div class="col-12 col-md-4 vstack">
@@ -21,41 +24,41 @@
     </div>
     <div class="col-12 col-md-8">
         <div class="row grid gap-3">
-            <div class="col-6 d-flex justify-content-end">Genre :</div>
+            <div class="col-6 col-md-6 d-flex justify-content-end">Genre :</div>
             <span class="col" >
                 <a class="px-1 border rounded" href="${UrlRoute.URL_GENRE}/${game.genre.id}">
                     ${game.genre.name}
                 </a>
             </span>
 
-            <div class="col-6 d-flex justify-content-end">Classification :</div>
+            <div class="col-6 col-md-6 d-flex justify-content-end">Classification :</div>
             <span class="col" >
                 <a class="px-1 border rounded" class="col" href="${UrlRoute.URL_CLASSIFICATION}/${game.classification.id}">
                     ${game.classification.name}
                 </a>
             </span>
 
-            <div class="col-6 d-flex justify-content-end">Publisher :</div>
+            <div class="col-6 col-md-6 d-flex justify-content-end">Publisher :</div>
             <span class="col" >
                 <a class="px-1 border rounded" href="${UrlRoute.URL_PUBLISHER}/${game.publisher.id}">
                     ${game.publisher.name}
                 </a>
             </span>
 
-            <div class="col-6 d-flex justify-content-end">Modele economique :</div>
+            <div class="col-6 col-md-6 d-flex justify-content-end">Modele economique :</div>
             <span class="col" >
                 <a class="px-1 border rounded" href="${UrlRoute.URL_BUSINESSMODEL}/${game.businessModel.id}">
                     ${game.businessModel.name}
                 </a>
             </span>
 
-            <div class="col-6 d-flex justify-content-end">Platformes :</div>
+            <div class="col-6 col-md-6 d-flex justify-content-end">Platformes :</div>
             <div class="col">
                 <c:forEach items="${game.platforms}" var="platform">
                     <a class="me-2 px-1 border rounded" href="${UrlRoute.URL_PLATFORM}/${platform.id}">${platform.name}</a>
                 </c:forEach>
             </div>
-            <div class="col-6 d-flex justify-content-end">Sortie :</div>
+            <div class="col-6 col-md-6 d-flex justify-content-end">Sortie :</div>
             <div class="col d-flex justify-content-start">${dateUtils.getDateFormat(game.publishedAt, "dd MMMM yyyy")}</div>
         </div>
     </div>

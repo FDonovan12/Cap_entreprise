@@ -39,7 +39,8 @@
                     <c:set var="sortable" value="publisher.name"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
-                <td ${rainbowStyleVery}>Operation</td>
+                <td width="130" ${rainbowStyleVery}>Note moyenne</td>
+                <td width="200" ${rainbowStyleVery}>Operation</td>
             </tr>
         </thead>
         <tbody>
@@ -48,6 +49,7 @@
                     <td ${rainbowStyleVery}><img height="100" src="${game.image}"></td>
                     <td ${rainbowStyleVery}>${game.name}</td>
                     <td ${rainbowStyleVery}>${game.publisher.name}</td>
+                    <td ${rainbowStyleVery}>${jspUtils.getStringRating(reviewService.getRatingByGame(game))}</td>
                     <td ${rainbowStyleVery}>
                         <a class="btn btn-secondary" href="${UrlRoute.URL_GAME}/${game.id}">
                             <i class="fa-regular fa-eye"></i>
