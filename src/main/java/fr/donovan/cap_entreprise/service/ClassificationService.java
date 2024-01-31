@@ -1,10 +1,13 @@
 package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Classification;
+import fr.donovan.cap_entreprise.entity.Genre;
 import fr.donovan.cap_entreprise.repository.ClassificationRepository;
 import fr.donovan.cap_entreprise.DTO.ClassificationDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,10 @@ public class ClassificationService implements DAOServiceInterface<Classification
 
     public List<Classification> findAll() {
         return this.classificationRepository.findAll();
+    }
+
+    public Page<Classification> findAll(Pageable pageable) {
+        return this.classificationRepository.findAll(pageable);
     }
 
     public Classification getByField(String field) {

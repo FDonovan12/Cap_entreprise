@@ -2,12 +2,16 @@ package fr.donovan.cap_entreprise.controller;
 import fr.donovan.cap_entreprise.entity.Game;
 import fr.donovan.cap_entreprise.entity.Publisher;
 import fr.donovan.cap_entreprise.DTO.PublisherDTO;
+import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.PublisherService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,22 +27,31 @@ public class PublisherController {
 
     private final PublisherService publisherService;
 
-    private final ReviewService reviewService;
+    private final GameService gameService;
 
     @GetMapping(path = UrlRoute.URL_PUBLISHER)
-    public ModelAndView index(ModelAndView mav) {
+    public ModelAndView index(ModelAndView mav, @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         mav.setViewName("publisher/index");
-        mav.addObject("publishers", publisherService.findAll());
+        mav.addObject("publishers", publisherService.findAll(pageable));
         return mav;
     }
 
     @GetMapping(value = UrlRoute.URL_PUBLISHER + "/{field}")
-    public ModelAndView show(ModelAndView mav, @PathVariable String field) {
+    public ModelAndView show(ModelAndView mav, @PathVariable String field,
+                                                @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         Publisher publisher = publisherService.getByField(field);
 
         mav.setViewName("publisher/show");
         mav.addObject("publisher", publisher);
-        mav.addObject("games_rating", reviewService.getRatingOfGames(publisher.getGames()));
+        mav.addObject("games", gameService.getGamesByObject(publisher, pageable));
         return mav;
     }
 

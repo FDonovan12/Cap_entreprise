@@ -4,10 +4,14 @@ import fr.donovan.cap_entreprise.entity.Classification;
 import fr.donovan.cap_entreprise.DTO.ClassificationDTO;
 import fr.donovan.cap_entreprise.service.ClassificationService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,22 +27,31 @@ public class ClassificationController {
 
     private final ClassificationService classificationService;
 
-    private final ReviewService reviewService;
+    private final GameService gameService;
 
     @GetMapping(path = UrlRoute.URL_CLASSIFICATION)
-    public ModelAndView index(ModelAndView mav) {
+    public ModelAndView index(ModelAndView mav, @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         mav.setViewName("classification/index");
-        mav.addObject("classifications", classificationService.findAll());
+        mav.addObject("classifications", classificationService.findAll(pageable));
         return mav;
     }
 
     @GetMapping(value = UrlRoute.URL_CLASSIFICATION + "/{field}")
-    public ModelAndView show(ModelAndView mav, @PathVariable String field) {
+    public ModelAndView show(ModelAndView mav, @PathVariable String field,
+                                                @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         Classification classification = classificationService.getByField(field);
 
         mav.setViewName("classification/show");
         mav.addObject("classification", classification);
-        mav.addObject("games_rating", reviewService.getRatingOfGames(classification.getGames()));
+        mav.addObject("games", gameService.getGamesByObject(classification, pageable));
         return mav;
     }
 

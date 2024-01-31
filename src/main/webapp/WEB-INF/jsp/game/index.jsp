@@ -3,28 +3,16 @@
 <c:set var="title" scope="request" value="Jeux"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<h1>Tous les jeux</h1>
+<div class="d-flex justify-content-start">
+    <h1>Jeux</h1>
+    <security:authorize access="hasRole('ROLE_MODERATOR')">
+        <a class="btn btn-link text-success fs-2" href="${UrlRoute.URL_GAME_NEW}">
+            <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </security:authorize>
+</div>
 <div class="col-12">
-    <div class="d-flex">
-
-<%--        <c:set var="label" scope="request" value="Note"/>--%>
-<%--        <c:set var="sortable" value="rating"/>--%>
-<%--        <%@ include file="../component/sortable.jsp" %>--%>
-
-<%--        <c:set var="label" scope="request" value="Jeu"/>--%>
-<%--        <c:set var="sortable" value="game.name"/>--%>
-<%--        <%@ include file="../component/sortable.jsp" %>--%>
-
-<%--        <c:set var="label" scope="request" value="Joueur"/>--%>
-<%--        <c:set var="sortable" value="gamer.nickname"/>--%>
-<%--        <%@ include file="../component/sortable.jsp" %>--%>
-
-        <span class="mt-auto mb-2">
-            <a href="${currentUrl}" class="btn-link">
-                Reset
-            </a>
-        </span>
-    </div>
+    ${jspUtils.getPagination(games, currentUrl, currentQuery)}
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
         <thead>
             <tr>
@@ -40,7 +28,9 @@
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
                 <td width="130" ${rainbowStyleVery}>Note moyenne</td>
-                <td width="200" ${rainbowStyleVery}>Operation</td>
+                <td width="200" ${rainbowStyleVery}>
+                    <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reset-filter.jsp"/>
+                </td>
             </tr>
         </thead>
         <tbody>
@@ -49,7 +39,7 @@
                     <td ${rainbowStyleVery}><img height="100" src="${game.image}"></td>
                     <td ${rainbowStyleVery}>${game.name}</td>
                     <td ${rainbowStyleVery}>${game.publisher.name}</td>
-                    <td ${rainbowStyleVery}>${jspUtils.getStringRating(reviewService.getRatingByGame(game))}</td>
+                    <td ${rainbowStyleVery}>${jspUtils.getStringRating(reviewService.getRatingByObject(game))}</td>
                     <td ${rainbowStyleVery}>
                         <a class="btn btn-secondary" href="${UrlRoute.URL_GAME}/${game.id}">
                             <i class="fa-regular fa-eye"></i>
@@ -70,16 +60,6 @@
             </c:forEach>
         </tbody>
     </table>
-    <div class="d-flex justify-content-between">
-        <span>
-            <security:authorize access="hasRole('ROLE_MODERATOR')">
-                <a href="${UrlRoute.URL_GAME_NEW}">Nouveau jeu</a>
-            </security:authorize>
-        </span>
-
-        <span>Total page ${games.totalPages}</span>
-        <span></span>
     </div>
 </div>
-${jspUtils.getPagination(games, currentUrl, currentQuery)}
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

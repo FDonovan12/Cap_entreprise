@@ -5,6 +5,8 @@ import fr.donovan.cap_entreprise.repository.PlatformRepository;
 import fr.donovan.cap_entreprise.DTO.PlatformDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,10 @@ public class PlatformService implements DAOServiceInterface<Platform> {
 
     public List<Platform> findAll() {
         return this.platformRepository.findAll();
+    }
+
+    public Page<Platform> findAll(Pageable pageable) {
+        return this.platformRepository.findAll(pageable);
     }
 
     public Platform getByField(String field) {

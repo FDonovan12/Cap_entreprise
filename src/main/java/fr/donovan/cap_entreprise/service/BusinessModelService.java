@@ -1,10 +1,13 @@
 package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.BusinessModel;
+import fr.donovan.cap_entreprise.entity.Classification;
 import fr.donovan.cap_entreprise.repository.BusinessModelRepository;
 import fr.donovan.cap_entreprise.DTO.BusinessModelDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,10 @@ public class BusinessModelService implements DAOServiceInterface<BusinessModel> 
 
     public List<BusinessModel> findAll() {
         return this.businessModelRepository.findAll();
+    }
+
+    public Page<BusinessModel> findAll(Pageable pageable) {
+        return this.businessModelRepository.findAll(pageable);
     }
 
     public BusinessModel getByField(String field) {

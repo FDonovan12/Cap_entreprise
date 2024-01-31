@@ -2,12 +2,16 @@ package fr.donovan.cap_entreprise.controller;
 
 import fr.donovan.cap_entreprise.entity.Genre;
 import fr.donovan.cap_entreprise.DTO.GenreDTO;
+import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.GenreService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,23 +24,31 @@ public class GenreController {
 
     private final GenreService genreService;
 
-    private final ReviewService reviewService;
+    private final GameService gameService;
 
     @GetMapping(path = UrlRoute.URL_GENRE)
-    public ModelAndView index(ModelAndView mav) {
+    public ModelAndView index(ModelAndView mav, @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         mav.setViewName("genre/index");
-        mav.addObject("genres", genreService.findAll());
+        mav.addObject("genres", genreService.findAll(pageable));
         return mav;
     }
 
     @GetMapping(value = UrlRoute.URL_GENRE + "/{field}")
-    public ModelAndView show(ModelAndView mav, @PathVariable String field) {
+    public ModelAndView show(ModelAndView mav, @PathVariable String field,
+                                                @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         Genre genre = genreService.getByField(field);
 
         mav.setViewName("genre/show");
         mav.addObject("genre", genre);
-        mav.addObject("games_rating", reviewService.getRatingOfGames(genre.getGames()));
-        mav.addObject("rating", reviewService.getRatingByObject(genre));
+        mav.addObject("games", gameService.getGamesByObject(genre, pageable));
         return mav;
     }
 

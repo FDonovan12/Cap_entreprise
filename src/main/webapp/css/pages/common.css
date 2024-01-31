@@ -36,9 +36,9 @@ h2 {
     display: block;
 }
 body {
-    background: linear-gradient(45deg, #404040, #adadad, #404040);
+    background: linear-gradient(45deg, #404040, #7e0000);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    animation: gradient 10s ease infinite;
 }
 @keyframes gradient {
     0% {

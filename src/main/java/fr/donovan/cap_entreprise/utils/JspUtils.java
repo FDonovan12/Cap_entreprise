@@ -52,12 +52,14 @@ public class JspUtils {
     public String getPagination(Page<Object> page, String url, String currentQuery) {
         int totalPage = page.getTotalPages();
         int currentPage = page.getNumber()+1;
+        String result = "";
 
         String invisibleShort = "<span class=\"invisible\">#</span>";
         String invisibleLong = "<span class=\"invisible\">##</span>";
 
         String format = "<a class=\"%s\" href=\"%s\">%s</a>";
-        String result = "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
+        result += "<div class=\"d-flex justify-content-around\"><div>Total page " + totalPage + "</div>";
+        result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
 
         if (!page.isFirst()) {
             result += getLinkPage(format,"pageable", url, currentQuery, 0, "<<");
@@ -82,7 +84,6 @@ public class JspUtils {
         }
         result += "</div></div>";
 
-        result += "<div class=\"d-flex justify-content-around\"><div>Total page " + totalPage + "</div>";
         result += "<div>Total element " + page.getTotalElements() + "</div></div>";
 
 //        result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
@@ -101,8 +102,6 @@ public class JspUtils {
     }
 
     public String getRainbow(int number, String method, double duration) {
-        System.out.println("Integer.toHexString(16) = " + Integer.toHexString(16));
-        System.out.println("Integer.toHexString(160) = " + Integer.toHexString(160));
         String result = "style=\"background: linear-gradient(" + method;
         for (int i = 0; i < number; i++) {
             int current = number/3;
@@ -115,12 +114,7 @@ public class JspUtils {
             String green = StringUtils.leftPad(Integer.toHexString(greenInt), 2, '0');
             String blue = StringUtils.leftPad(Integer.toHexString(blueInt), 2, '0');
 
-            if (red.length() <2 || green.length() <2 || blue.length() <2) {
-                System.out.println("red + green + blue = " + red + " " + green + " " + blue);
-                System.out.println("int red + green + blue = " + redInt + " " + greenInt + " " + blueInt);
-            }
 //            result += String.format(", rgb(%d,%d,%d)", red, green, blue);
-//            result += ", #ee7752, #e73c7e, #23a6d5, #23d5ab";
             result += String.format(", #%s%s%s", red, green, blue);
         }
         return result+"); background-size: 400% 400%; animation: gradient "+duration+"s ease infinite\"";

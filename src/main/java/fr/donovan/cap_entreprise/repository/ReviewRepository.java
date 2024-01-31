@@ -14,9 +14,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findByModeratorIsNotNullOrGamer(User gamer, Pageable pageable);
 
+    List<Review> findByGamer(User gamer);
 
     @Query("SELECT AVG(r.rating) FROM Review r WHERE ?1 = r.game GROUP BY r.game")
-    double getRatingByGame(Game game);
+    Double getRatingByObject(Game game);
 
     @Query("SELECT AVG(r.rating) FROM Review r WHERE r.game IN(?1) GROUP BY r.game")
     List<Double> getRatingOfGames(List<Game> games);
@@ -35,4 +36,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("SELECT AVG(r.rating) FROM Review r JOIN Game g ON g = r.game WHERE g.publisher = ?1 GROUP BY g.publisher")
     Double getRatingByObject(Publisher publisher);
+
+    @Query("SELECT AVG(r.rating) FROM Review r WHERE r.gamer = ?1 GROUP BY r.gamer")
+    Double getRatingByObject(User user);
+
+    Page<Review> findByGame(Game game, Pageable pageable);
 }

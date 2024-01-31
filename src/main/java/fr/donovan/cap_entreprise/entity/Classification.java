@@ -28,6 +28,8 @@ public class Classification implements EntityInterface, NomenclatureInterface {
     @Column(nullable = false)
     private String name;
 
+    private String image;
+
     @OneToMany(mappedBy = "classification")
     private List<Game> games = new ArrayList<>();
 }

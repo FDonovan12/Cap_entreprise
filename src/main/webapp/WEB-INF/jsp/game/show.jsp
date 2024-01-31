@@ -5,7 +5,7 @@
 
 <div class="d-flex">
     <h1 class="mb-2">${game.name}</h1>
-    <div class="ps-3 fs-3">${jspUtils.getStringRating(rating)}</div>
+    <div class="ps-3 fs-3">${jspUtils.getStringRating(reviewService.getRatingByObject(game))}</div>
 </div>
 <div class="row">
 <%--    <div class="col-1"></div>--%>
@@ -67,6 +67,9 @@
         <p class="mb-3">${game.description}</p>
         <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW_NEW}/${game.id}">Laisser un avis sur ce jeu</a>
     </div>
+    <h2>Commentaires</h2>
+    <c:set var="reviews" scope="request" value="${reviews}"/>
+    <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reviews_table.jsp"/>
 </div>
 
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

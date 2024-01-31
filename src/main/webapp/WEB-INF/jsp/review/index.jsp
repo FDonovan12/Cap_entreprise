@@ -2,10 +2,18 @@
 <%@ include file="../tag.jsp" %>
 <c:set var="title" scope="request" value="reviews"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
-
-<h1>Tous les avis</h1>
+<div class="d-flex justify-content-start">
+    <h1>Avis</h1>
+    <a class="btn btn-link text-success fs-2" href="${UrlRoute.URL_REVIEW_NEW}"><i class="fa-solid fa-circle-plus"></i></a>
+    <security:authorize access="hasRole('ROLE_MODERATOR')">
+        <a href="${UrlRoute.URL_EXPORT}" class="btn btn-link">
+            <i class="fa-solid fa-file-excel me-1"></i>
+            Télécharger export Excel
+        </a>
+    </security:authorize>
+</div>
 <div class="col-12">
-    <div class="d-flex">
+<%--    <div class="d-flex justify-content-between">--%>
 <%--        <c:set var="label" scope="request" value="Date"/>--%>
 <%--        <c:set var="sortable" value="createdAt"/>--%>
 <%--        <%@ include file="../component/sortable.jsp" %>--%>
@@ -22,31 +30,17 @@
 <%--        <c:set var="label" scope="request" value="Joueur"/>--%>
 <%--        <c:set var="sortable" value="gamer.nickname"/>--%>
 <%--        <%@ include file="../component/sortable.jsp" %>--%>
-
-        <span class="mt-auto mb-2">
-            <a href="${currentUrl}" class="btn-link" title="Réinitialiser les filtres">
-                <i class="fa fa-filter-circle-xmark"></i>
-            </a>
-        </span>
-    </div>
+<%--    </div>--%>
+    ${jspUtils.getPagination(pageReviews, currentUrl, currentQuery)}
     <table class="table table-dark table-hover <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if>">
         <thead>
             <tr>
                 <td width="200" ${rainbowStyleVery}>
-<%--                    Date de creation--%>
                     <c:set var="label" scope="request" value="Date de creation"/>
                     <c:set var="sortable" value="createdAt"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
                 <td ${rainbowStyleVery}>
-<%--                    <f:select items="${games}" itemLabel="name" cssClass="form-select" path="game"/>--%>
-<%--                    <label for="game-select"></label>--%>
-<%--                    <select name="game" id="game-select">--%>
-<%--                        <option value="">Tout les jeux</option>--%>
-<%--                        <c:forEach items="${games}" var="game">--%>
-<%--                            <option value="${game.name}">${game.name}</option>--%>
-<%--                        </c:forEach>--%>
-<%--                    </select>--%>
                     <c:set var="label" scope="request" value="Jeu"/>
                     <c:set var="sortable" value="game.name"/>
                     <%@ include file="../component/sortable.jsp" %>
@@ -66,7 +60,9 @@
                     <c:set var="sortable" value="rating"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
-                <td width="200" ${rainbowStyleVery}>Operation</td>
+                <td width="200" ${rainbowStyleVery}>
+                    <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reset-filter.jsp"/>
+                </td>
             </tr>
         </thead>
         <tbody>
@@ -106,12 +102,4 @@
         </tbody>
     </table>
 </div>
-<div class="d-flex justify-content-between">
-    <a href="${UrlRoute.URL_REVIEW_NEW}">Nouveau commentaire</a>
-    <a href="${UrlRoute.URL_EXPORT}" class="btn btn-link">
-        <i class="fa-solid fa-file-excel me-1"></i>
-        Télécharger export Excel
-    </a>
-</div>
-    ${jspUtils.getPagination(pageReviews, currentUrl, currentQuery)}
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

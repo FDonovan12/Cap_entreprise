@@ -4,10 +4,14 @@ import fr.donovan.cap_entreprise.entity.BusinessModel;
 import fr.donovan.cap_entreprise.DTO.BusinessModelDTO;
 import fr.donovan.cap_entreprise.service.BusinessModelService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
+import fr.donovan.cap_entreprise.service.GameService;
 import fr.donovan.cap_entreprise.service.ReviewService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -23,22 +27,31 @@ public class BusinessModelController {
 
     private final BusinessModelService businessModelService;
 
-    private final ReviewService reviewService;
+    private final GameService gameService;
 
     @GetMapping(path = UrlRoute.URL_BUSINESSMODEL)
-    public ModelAndView index(ModelAndView mav) {
+    public ModelAndView index(ModelAndView mav, @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         mav.setViewName("businessModel/index");
-        mav.addObject("businessModels", businessModelService.findAll());
+        mav.addObject("businessModels", businessModelService.findAll(pageable));
         return mav;
     }
 
     @GetMapping(value = UrlRoute.URL_BUSINESSMODEL + "/{field}")
-    public ModelAndView show(ModelAndView mav, @PathVariable String field) {
+    public ModelAndView show(ModelAndView mav, @PathVariable String field,
+                                                @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "id" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         BusinessModel businessModel = businessModelService.getByField(field);
 
         mav.setViewName("businessModel/show");
         mav.addObject("businessModel", businessModel);
-        mav.addObject("games_rating", reviewService.getRatingOfGames(businessModel.getGames()));
+        mav.addObject("games", gameService.getGamesByObject(businessModel, pageable));
         return mav;
     }
 

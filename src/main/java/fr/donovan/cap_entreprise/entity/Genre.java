@@ -27,6 +27,8 @@ public class Genre implements EntityInterface, NomenclatureInterface {
     @Column(nullable = false)
     private String name;
 
+    private String image;
+
     @OneToMany(mappedBy = "genre")
     private List<Game> games = new ArrayList<>();
 }

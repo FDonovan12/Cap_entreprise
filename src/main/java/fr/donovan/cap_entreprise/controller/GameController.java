@@ -28,6 +28,8 @@ public class GameController {
 
     private final GameService gameService;
 
+    private final ReviewService reviewService;
+
     private final GenreService genreService;
 
     private final ClassificationService classificationService;
@@ -52,11 +54,17 @@ public class GameController {
     }
 
     @GetMapping(value = UrlRoute.URL_GAME + "/{field}")
-    public ModelAndView show(ModelAndView mav, @PathVariable String field) {
+    public ModelAndView show(ModelAndView mav, @PathVariable String field,
+                                                @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "createdAt" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         Game game = gameService.getByField(field);
 
         mav.setViewName("game/show");
         mav.addObject("game", game);
+        mav.addObject("reviews", reviewService.getByGame(game , pageable));
         return mav;
     }
 

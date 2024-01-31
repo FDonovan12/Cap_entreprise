@@ -1,10 +1,13 @@
 package fr.donovan.cap_entreprise.service;
 
+import fr.donovan.cap_entreprise.entity.BusinessModel;
 import fr.donovan.cap_entreprise.entity.Publisher;
 import fr.donovan.cap_entreprise.repository.PublisherRepository;
 import fr.donovan.cap_entreprise.DTO.PublisherDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,10 @@ public class PublisherService implements DAOServiceInterface<Publisher> {
 
     public List<Publisher> findAll() {
         return this.publisherRepository.findAll();
+    }
+
+    public Page<Publisher> findAll(Pageable pageable) {
+        return this.publisherRepository.findAll(pageable);
     }
 
     public Publisher getByField(String field) {

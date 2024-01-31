@@ -27,6 +27,10 @@ public class ReviewService implements DAOServiceInterface<Review> {
         return this.reviewRepository.findAll();
     }
 
+    public List<Review> findByGamer(User gamer) {
+        return this.reviewRepository.findByGamer(gamer);
+    }
+
     public Page<Review> findAll(User user, Pageable pageable) {
         System.out.println("pageable = " + pageable);
         if (user instanceof Gamer) {
@@ -35,12 +39,12 @@ public class ReviewService implements DAOServiceInterface<Review> {
         return  reviewRepository.findAll(pageable);
     }
 
-    public double getRatingByGame(Game game) {
-        return reviewRepository.getRatingByGame(game);
-    }
-
     public List<Double> getRatingOfGames(List<Game> games) {
         return reviewRepository.getRatingOfGames(games);
+    }
+
+    public Object getByGame(Game game, Pageable pageable) {
+        return reviewRepository.findByGame(game, pageable);
     }
 
     public Double getRatingByObject(Object object) {
@@ -57,6 +61,12 @@ public class ReviewService implements DAOServiceInterface<Review> {
             return reviewRepository.getRatingByObject(cast);
         }
         if (object instanceof BusinessModel cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        if (object instanceof Game cast) {
+            return reviewRepository.getRatingByObject(cast);
+        }
+        if (object instanceof User cast) {
             return reviewRepository.getRatingByObject(cast);
         }
         throw new NotFoundCapEntrepriseException("Review", "rating", object);

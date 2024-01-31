@@ -3,16 +3,16 @@
 <c:set var="title" scope="request" value="Jeux"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<h1>Tous les jeux</h1>
+<div class="d-flex justify-content-start">
+    <h1>Platforme</h1>
+    <security:authorize access="hasRole('ROLE_MODERATOR')">
+        <a class="btn btn-link text-success fs-2" href="${UrlRoute.URL_PLATFORM_NEW}">
+            <i class="fa-solid fa-circle-plus"></i>
+        </a>
+    </security:authorize>
+</div>
 <div class="col-12">
-    <div class="d-flex">
-
-        <span class="mt-auto mb-2">
-            <a href="${currentUrl}" class="btn-link">
-                Reset
-            </a>
-        </span>
-    </div>
+    ${jspUtils.getPagination(platforms, currentUrl, currentQuery)}
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
         <thead>
             <tr>
@@ -24,11 +24,13 @@
                 </td>
                 <td width="100" ${rainbowStyleVery}> Jeux </td>
                 <td width="100" ${rainbowStyleVery}> Rating </td>
-                <td width="200" ${rainbowStyleVery}>Operation</td>
+                <td width="200" ${rainbowStyleVery}>
+                    <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reset-filter.jsp"/>
+                </td>
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${platforms}" var="platform">
+            <c:forEach items="${platforms.content}" var="platform">
                 <tr>
 <%--                    <td ${rainbowStyleVery}><img height="100" src="${platform.image}"></td>--%>
                     <td ${rainbowStyleVery}>${platform.name}</td>
@@ -54,13 +56,6 @@
             </c:forEach>
         </tbody>
     </table>
-    <security:authorize access="hasRole('ROLE_MODERATOR')">
-        <div class="d-flex justify-content-between">
-            <span>
-                <a href="${UrlRoute.URL_PLATFORM_NEW}">Nouvelle platforme</a>
-            </span>
-        </div>
-    </security:authorize>
 </div>
 <%--${jspUtils.getPagination(re, currentUrl, currentQuery)}--%>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

@@ -62,7 +62,7 @@
         </security:authorize>
         <security:authorize access="isAuthenticated()">
             <div class="ms-3">
-                <a class="navbar-brand btn btn-secondary disabled" href="${UrlRoute.URL_USER}/${userLogged.id}">${userLogged.nickname}</a>
+                <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_USER}/${userLogged.id}">${userLogged.nickname}</a>
                 <form class="navbar-brand m-0 p-2 btn btn-danger" method="POST" action="${UrlRoute.URL_LOGOUT}"
                       autocomplete="off">
                     <button type="submit" tabindex="3" class="bg-danger btn m-0 p-0">Deconnection</button>
@@ -74,25 +74,25 @@
 
 </nav>
 <security:authorize access="isAuthenticated()">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="w-100 d-md-flex justify-content-start ms-3">
-        <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_GENRE}">
-            Genre
-        </a>
-        <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_PLATFORM}">
-            Platforme
-        </a>
-        <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_CLASSIFICATION}">
-            Classification
-        </a>
-        <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_BUSINESSMODEL}">
-            Modele economique
-        </a>
-        <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_PUBLISHER}">
-            Editeur
-        </a>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="w-100 d-md-flex justify-content-start ms-3">
+            <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_GENRE}">
+                Genre
+            </a>
+            <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_PLATFORM}">
+                Platforme
+            </a>
+            <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_CLASSIFICATION}">
+                Classification
+            </a>
+            <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_BUSINESSMODEL}">
+                Modele economique
+            </a>
+            <a class="navbar-brand btn btn-secondary" href="${UrlRoute.URL_PUBLISHER}">
+                Editeur
+            </a>
+        </div>
+    </nav>
 </security:authorize>
 
-<div class="container-fluid p-5">
+<div class="container-fluid p-4">

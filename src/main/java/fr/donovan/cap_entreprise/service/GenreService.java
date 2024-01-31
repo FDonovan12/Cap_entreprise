@@ -1,10 +1,13 @@
 package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Genre;
+import fr.donovan.cap_entreprise.entity.Platform;
 import fr.donovan.cap_entreprise.repository.GenreRepository;
 import fr.donovan.cap_entreprise.DTO.GenreDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,10 @@ public class GenreService implements DAOServiceInterface<Genre> {
 
     public List<Genre> findAll() {
         return this.genreRepository.findAll();
+    }
+
+    public Page<Genre> findAll(Pageable pageable) {
+        return this.genreRepository.findAll(pageable);
     }
 
     public Genre getByField(String field) {

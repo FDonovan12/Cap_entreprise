@@ -26,6 +26,8 @@ public class Publisher implements EntityInterface, NomenclatureInterface {
     @Column(nullable = false)
     private String name;
 
+    private String image;
+
     @OneToMany(mappedBy = "publisher")
     private List<Game> games = new ArrayList<>();
 }

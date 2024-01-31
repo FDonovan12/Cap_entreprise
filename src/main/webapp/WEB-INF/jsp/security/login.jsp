@@ -2,7 +2,7 @@
 <%@ include file="../tag.jsp" %>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<form method="POST" action="${UrlRoute.URL_LOGIN}" class="form-signin">
+<form method="POST" action="${UrlRoute.URL_LOGIN}" class="col-8 mx-auto">
     <h2 class="form-heading">Connection</h2>
     <div class="form-group ${error != null ? 'has-error' : ''}">
 

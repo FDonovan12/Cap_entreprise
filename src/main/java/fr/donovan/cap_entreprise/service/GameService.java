@@ -1,6 +1,6 @@
 package fr.donovan.cap_entreprise.service;
 
-import fr.donovan.cap_entreprise.entity.Game;
+import fr.donovan.cap_entreprise.entity.*;
 import fr.donovan.cap_entreprise.repository.GameRepository;
 import fr.donovan.cap_entreprise.DTO.GameDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static fr.donovan.cap_entreprise.mapping.UrlRoute.*;
@@ -36,6 +37,24 @@ public class GameService implements DAOServiceInterface<Game> {
     }
 
 
+    public Page<Game> getGamesByObject(Object object, Pageable pageable) {
+        if (object instanceof Genre cast) {
+            return gameRepository.getByGenre(cast, pageable);
+        }
+        if (object instanceof Classification cast) {
+            return gameRepository.getByClassification(cast, pageable);
+        }
+        if (object instanceof Platform cast) {
+            return gameRepository.getByPlatformsContains(cast, pageable);
+        }
+        if (object instanceof Publisher cast) {
+            return gameRepository.getByPublisher(cast, pageable);
+        }
+        if (object instanceof BusinessModel cast) {
+            return gameRepository.getByBusinessModel(cast, pageable);
+        }
+        throw new NotFoundCapEntrepriseException("Game", "getGamesByObject", object);
+    }
     public Game getByField(String field) {
         try {
             Long id = Long.parseLong(field);
