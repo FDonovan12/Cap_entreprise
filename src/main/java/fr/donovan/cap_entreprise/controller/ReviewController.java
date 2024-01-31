@@ -40,6 +40,7 @@ public class ReviewController {
                                                 Pageable pageable,
                                                 Principal principal) {
         mav.setViewName("review/index");
+        System.out.println("pageable = " + pageable);
         User user = userService.getObjectByNickname(principal.getName());
         mav.addObject("pageReviews", reviewService.findAll(user, pageable));
         mav.addObject("games", gameService.findAll());

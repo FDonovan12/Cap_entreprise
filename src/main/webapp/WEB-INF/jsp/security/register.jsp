@@ -2,7 +2,7 @@
 <%@ include file="../tag.jsp" %>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<div class="container">
+<div class="container col-8 mx-auto">
     <f:form method="POST" modelAttribute="userForm" class="form-signin">
         <h2 class="form-signin-heading">Create your account</h2>
 

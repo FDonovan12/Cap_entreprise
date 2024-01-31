@@ -5,9 +5,9 @@ public class UrlRoute implements
 
     public static final String URL_HOME = "";
     public static final String URL_API = "/api";
-    public static final String URL_LOGIN = "/login";
+    public static final String URL_LOGIN = "/connexion";
     public static final String URL_LOGOUT = "/logout";
-    public static final String URL_REGISTER = "/register";
+    public static final String URL_REGISTER = "/inscription";
     public static final String URL_ADMIN = "/admin";
 
     public static final String URL_EXPORT = "/telecharger-export-excel";

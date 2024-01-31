@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
-<c:set var="title" scope="request" value="reviews"/>
+<c:set var="title" scope="request" value="Avis"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 <div class="d-flex justify-content-start">
     <h1>Avis</h1>
@@ -32,6 +32,10 @@
 <%--        <%@ include file="../component/sortable.jsp" %>--%>
 <%--    </div>--%>
     ${jspUtils.getPagination(pageReviews, currentUrl, currentQuery)}
+    <div class="sort-filter mt-4 me-3">
+        <div>
+        </div>
+    </div>
     <table class="table table-dark table-hover <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if>">
         <thead>
             <tr>
@@ -51,9 +55,24 @@
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
                 <td ${rainbowStyleVery}>
-                    <c:set var="label" scope="request" value="Statut"/>
-                    <c:set var="sortable" value="moderator"/>
-                    <%@ include file="../component/sortable.jsp" %>
+<%--                    <c:set var="label" scope="request" value="Statut"/>--%>
+<%--                    <c:set var="sortable" value="moderator"/>--%>
+<%--                    <%@ include file="../component/sortable.jsp" %>--%>
+                    <select class="form-select sortable-select">
+                        <option value="all" data-filter-url="${currentUrl}">
+                            Tous les commentaires
+                        </option>
+                        <option value="sort=moderator,desc"
+                                data-filter-url="${jspUtils.getUrlFrom(currentUrl, currentQuery, "sort=moderator,desc")}"
+                        >
+                            Modérés
+                        </option>
+                        <option value="sort=moderator,asc"
+                                data-filter-url="${jspUtils.getUrlFrom(currentUrl, currentQuery, "sort=moderator,asc")}"
+                        >
+                            À modérer
+                        </option>
+                    </select>
                 </td>
                 <td width="50" ${rainbowStyleVery}>
                     <c:set var="label" scope="request" value="Note"/>
@@ -83,15 +102,15 @@
                         </td>
                         <td ${rainbowStyleVery}>${jspUtils.getStringRating(review.rating)}</td>
                         <td ${rainbowStyleVery}>
-                            <a class="btn btn-secondary" href="${UrlRoute.URL_REVIEW}/${review.id}">
+                            <a class="btn btn-outline-secondary border-0 text-white" href="${UrlRoute.URL_REVIEW}/${review.id}">
                                 <i class="fa-regular fa-eye"></i>
                             </a>
                             <security:authorize access="hasRole('ROLE_MODERATOR')">
                                 <c:if test="${review.moderator == null}">
-                                    <a class="btn btn-success" href="${UrlRoute.URL_REVIEW_VALIDATE}/${review.id}">
+                                    <a class="btn btn-outline-secondary border-0 text-success" href="${UrlRoute.URL_REVIEW_VALIDATE}/${review.id}">
                                         <i class="fa-regular fa-circle-check"></i>
                                     </a>
-                                    <a class="btn btn-danger" href="${UrlRoute.URL_REVIEW_DELETE}/${review.id}">
+                                    <a class="btn btn-outline-secondary border-0 text-danger" href="${UrlRoute.URL_REVIEW_DELETE}/${review.id}">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </a>
                                 </c:if>

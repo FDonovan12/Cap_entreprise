@@ -23,7 +23,7 @@
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
                 <td ${rainbowStyleVery}>
-                    <c:set var="label" scope="request" value="Editeur"/>
+                    <c:set var="label" scope="request" value="Éditeur"/>
                     <c:set var="sortable" value="publisher.name"/>
                     <%@ include file="../component/sortable.jsp" %>
                 </td>
@@ -41,17 +41,17 @@
                     <td ${rainbowStyleVery}>${game.publisher.name}</td>
                     <td ${rainbowStyleVery}>${jspUtils.getStringRating(reviewService.getRatingByObject(game))}</td>
                     <td ${rainbowStyleVery}>
-                        <a class="btn btn-secondary" href="${UrlRoute.URL_GAME}/${game.id}">
+                        <a class="btn btn-outline-secondary border-0 text-white" href="${UrlRoute.URL_GAME}/${game.id}">
                             <i class="fa-regular fa-eye"></i>
                         </a>
                         <security:authorize access="hasRole('ROLE_MODERATOR')">
-                            <a class="btn btn-success" href="${UrlRoute.URL_GAME_EDIT}/${game.id}">
+                            <a class="btn btn-outline-warning border-0" href="${UrlRoute.URL_GAME_EDIT}/${game.id}">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a class="btn btn-danger" href="${UrlRoute.URL_GAME_DELETE}/${game.id}">
+                            <a class="btn btn-outline-danger border-0" href="${UrlRoute.URL_GAME_DELETE}/${game.id}">
                                 <i class="fa-regular fa-trash-can"></i>
                             </a>
-                            <a class="btn btn-success" href="${UrlRoute.URL_GAME_UPLOAD}/${game.id}">
+                            <a class="btn btn-outline-success border-0" href="${UrlRoute.URL_GAME_UPLOAD}/${game.id}">
                                 <i class="fa-regular fa-image"></i>
                             </a>
                         </security:authorize>

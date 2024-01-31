@@ -58,8 +58,8 @@ public class JspUtils {
         String invisibleLong = "<span class=\"invisible\">##</span>";
 
         String format = "<a class=\"%s\" href=\"%s\">%s</a>";
-        result += "<div class=\"d-flex justify-content-around\"><div>Total page " + totalPage + "</div>";
-        result += "<div class=\"navigation d-flex justify-content-center my-4\"><div class=\"pagination\">";
+        result += "<div class=\"d-flex justify-content-around my-4\"><div>Total page " + totalPage + "</div>";
+        result += "<div class=\"navigation d-flex justify-content-center\"><div class=\"pagination\">";
 
         if (!page.isFirst()) {
             result += getLinkPage(format,"pageable", url, currentQuery, 0, "<<");
@@ -147,6 +147,17 @@ public class JspUtils {
                         uri.toUriString()
                                 .replaceAll("page=[0-9]+",
                                         "page=" + queryParamValue));
+            } else {
+                uri.queryParam(queryParamName, queryParamValue);
+            }
+        }
+
+        if (queryParamName.equals("filter")) {
+            if (uri.toUriString().contains("filter")) {
+                return UriComponentsBuilder.fromHttpUrl(
+                        uri.toUriString()
+                                .replaceAll("filter=[^:]+:[^:]+:",
+                                        "filter=" + queryParamValue));
             } else {
                 uri.queryParam(queryParamName, queryParamValue);
             }

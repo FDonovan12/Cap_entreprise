@@ -5,7 +5,7 @@
 
 <h1>Donnez votre avis</h1>
 <f:form modelAttribute="review" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
-    <div class="mb-3 row">
+    <div class="col-8 mx-auto mb-3 row">
         <f:label path="description" class="col-sm-2 col-form-label">Description</f:label>
         <div class="col-sm-10 mb-3">
             <f:input type="text" cssClass="form-control" path="description"/>
@@ -28,11 +28,11 @@
             <f:select items="${games}" itemLabel="name" cssClass="form-select" path="game"/>
             <f:errors path="game" cssClass="invalid-feedback"/>
         </div>
+        <div>
+            <f:button class="btn btn-lg btn-success" type="submit">Submit</f:button>
+            <f:button class="btn btn-lg btn-danger" type="reset">Reset</f:button>
+        </div>
     </div>
-<%--    <f:button class="btn btn-secondary" type="reset">Reset</f:button>--%>
-<%--    <f:button class="btn btn-primary">Submit</f:button>--%>
-    <f:button class="btn btn-lg btn-success" type="submit">Submit</f:button>
-    <f:button class="btn btn-lg btn-danger" type="reset">Reset</f:button>
 </f:form>
 
 

@@ -5,7 +5,7 @@
 
 <h1>Formulaire de jeu</h1>
 <f:form modelAttribute="game" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
-    <div class="mb-3 row">
+    <div class="col-8 mx-auto mb-3 row">
         <f:label path="name" class="col-sm-2 col-form-label">Nom</f:label>
         <div class="col-sm-10 mb-3">
             <f:input type="text" cssClass="form-control" path="name"/>
@@ -44,7 +44,7 @@
             <f:errors path="genre" cssClass="invalid-feedback"/>
         </div>
 
-        <f:label path="publisher" class="col-sm-2 col-form-label">Editeur</f:label>
+        <f:label path="publisher" class="col-sm-2 col-form-label">Éditeur</f:label>
         <div class="col-sm-10 mb-3">
             <f:select items="${publishers}" itemLabel="name" cssClass="form-select" path="publisher"/>
 <%--            <f:input type="number" cssClass="form-control" path="publisher"/>--%>
@@ -64,22 +64,22 @@
 <%--        </div>--%>
         <f:label path="platforms" class="col-sm-2 col-form-label">Platform</f:label>
         <div class="col-sm-10 mb-3">
-            <input class="form-control" data-multiple-select-input="platform"/>
+            <input class="form-control" data-multiple-select-input="platforms"/>
             <f:select path="platforms"
                       multiple="multiple"
                       items="${platforms}"
                       cssClass="form-select"
                       itemLabel="name"
-                      data-multiple-select="platform"
+                      data-multiple-select="platforms"
             >
             </f:select>
             <f:errors path="platforms" cssClass="invalid-feedback"/>
         </div>
+        <div>
+            <f:button class="btn btn-lg btn-success" type="submit">Submit</f:button>
+            <f:button class="btn btn-lg btn-danger" type="reset">Reset</f:button>
+        </div>
     </div>
-<%--    <f:button class="btn btn-secondary" type="reset">Reset</f:button>--%>
-<%--    <f:button class="btn btn-primary">Submit</f:button>--%>
-    <f:button class="btn btn-lg btn-success" type="submit">Submit</f:button>
-    <f:button class="btn btn-lg btn-danger" type="reset">Reset</f:button>
 </f:form>
 
 

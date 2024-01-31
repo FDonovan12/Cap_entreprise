@@ -38,6 +38,9 @@ public abstract class User implements UserDetails {
     @Column(nullable = false)
     protected boolean veryEccentric = false;
 
+    @Column(nullable = false)
+    protected boolean leTrucQueKevinVeut = false;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
