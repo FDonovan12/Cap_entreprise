@@ -127,7 +127,6 @@ public class GameController {
     public ModelAndView fileUploadPost(@RequestParam("file") MultipartFile file, ModelAndView mav, @PathVariable Long id) {
         System.out.println("GameController.fileUploadPost");
         String image = gameService.upload("jeu/", file);
-        System.out.println("image = " + image);
         gameService.addImage(image, id);
         mav.setViewName("redirect:" + UrlRoute.URL_GAME+"/"+id);
         return mav;

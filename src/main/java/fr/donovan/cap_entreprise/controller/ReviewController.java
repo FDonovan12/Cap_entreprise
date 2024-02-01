@@ -40,7 +40,6 @@ public class ReviewController {
                                                 Pageable pageable,
                                                 Principal principal) {
         mav.setViewName("review/index");
-        System.out.println("pageable = " + pageable);
         User user = userService.getObjectByNickname(principal.getName());
         mav.addObject("pageReviews", reviewService.findAll(user, pageable));
         mav.addObject("games", gameService.findAll());
@@ -152,12 +151,11 @@ public class ReviewController {
                                                         @PathVariable("moderate") long moderate,
                                                         Principal principal) {
         reviewService.moderate(id, moderate, principal.getName());
-        return new ModelAndView("redirect:" + UrlRoute.URL_REVIEW);
+        return new ModelAndView("redirect:" + UrlRoute.URL_REVIEW + "?sort=moderator,asc");
     }
 
     private ModelAndView getFormByDTO(ModelAndView mav, ReviewDTO dto, String uri, boolean isEdit) {
         mav.setViewName("review/form");
-        System.out.println("uri = " + uri);
         mav.addObject("review", dto);
         mav.addObject("action", uri);
         mav.addObject("isEdit", isEdit);

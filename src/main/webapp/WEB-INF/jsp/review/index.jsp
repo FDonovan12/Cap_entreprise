@@ -2,6 +2,9 @@
 <%@ include file="../tag.jsp" %>
 <c:set var="title" scope="request" value="Avis"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
+
+<div class=" bg-dark bg-opacity-75 rounded p-3">
+
 <div class="d-flex justify-content-between">
     <div class="d-flex justify-content-start">
         <h1>Avis</h1>
@@ -15,6 +18,7 @@
 
     </div>
 
+    <c:if test="${userLogged.leTrucQueKevinVeut}">
     <div class="sort-filter">
         <div class="d-flex justify-content-between">
             <c:set var="label" scope="request" value="Date"/>
@@ -34,13 +38,29 @@
             <c:set var="sortable" value="gamer.nickname"/>
             <%@ include file="../component/sortable.jsp" %>
 
-            <c:set var="label" scope="request" value="Modérer"/>
-            <c:set var="sortable" value="moderator"/>
-            <%@ include file="../component/sortable.jsp" %>
+<%--            <c:set var="label" scope="request" value="Modérer"/>--%>
+<%--            <c:set var="sortable" value="moderator"/>--%>
+<%--            <%@ include file="../component/sortable.jsp" %>--%>
+            <select class="form-select sortable-select me-2">
+                <option value="all" data-filter-url="${currentUrl}">
+                    Tous les commentaires
+                </option>
+                <option value="sort=moderator,desc"
+                        data-filter-url="${jspUtils.getUrlFrom(currentUrl, currentQuery, "sort=moderator,desc")}"
+                >
+                    Modérés
+                </option>
+                <option value="sort=moderator,asc"
+                        data-filter-url="${jspUtils.getUrlFrom(currentUrl, currentQuery, "sort=moderator,asc")}"
+                >
+                    À modérer
+                </option>
+            </select>
 
             <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reset-filter.jsp"/>
         </div>
     </div>
+    </c:if>
 </div>
 
 <c:if test="${!userLogged.leTrucQueKevinVeut}">
@@ -68,21 +88,6 @@
     <%--                    <c:set var="label" scope="request" value="Statut"/>--%>
     <%--                    <c:set var="sortable" value="moderator"/>--%>
     <%--                    <%@ include file="../component/sortable.jsp" %>--%>
-                        <select class="form-select sortable-select">
-                            <option value="all" data-filter-url="${currentUrl}">
-                                Tous les commentaires
-                            </option>
-                            <option value="sort=moderator,desc"
-                                    data-filter-url="${jspUtils.getUrlFrom(currentUrl, currentQuery, "sort=moderator,desc")}"
-                            >
-                                Modérés
-                            </option>
-                            <option value="sort=moderator,asc"
-                                    data-filter-url="${jspUtils.getUrlFrom(currentUrl, currentQuery, "sort=moderator,asc")}"
-                            >
-                                À modérer
-                            </option>
-                        </select>
                     </td>
                     <td width="50" ${rainbowStyleVery}>
                         <c:set var="label" scope="request" value="Note"/>
@@ -137,4 +142,5 @@
     <c:set var="reviews" scope="request" value="${pageReviews}"/>
     <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reviews_table.jsp"/>
 </c:if>
+</div>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

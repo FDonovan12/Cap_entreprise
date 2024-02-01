@@ -36,9 +36,11 @@ ${jspUtils.getPagination(reviews, currentUrl, currentQuery)}
                     </figcaption>
                 </p>
                 <div class="review-card w-100">
-                    <p class="review-description">
+                    <a class="review-description" href="${UrlRoute.URL_REVIEW}/${review.id}">
+                        <div class="review-description">
                             ${jspUtils.excerpt(review.description, 209)}
-                    </p>
+                        </div>
+                    </a>
                     <div class="d-flex justify-content-between">
                         <p class="${jspUtils.getCssClas(review.rating)}">
                                 ${jspUtils.getStringRating(review.rating)} / 20

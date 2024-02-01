@@ -3,9 +3,10 @@
 <c:set var="title" scope="request" value="new_review"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
+<div class=" bg-dark bg-opacity-75 rounded p-3">
 <h1>Donnez votre avis</h1>
-<f:form modelAttribute="review" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
-    <div class="col-8 mx-auto mb-3 row">
+<f:form modelAttribute="review" method="post" action="${currentUrl}" cssClass="pt-5">
+    <div class="col-8 mx-auto row">
         <f:label path="description" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Description</f:label>
         <div class="col-9 col-lg-10 mb-3">
             <f:input type="text" cssClass="form-control" path="description"/>
@@ -20,7 +21,7 @@
 
         <f:label path="rating" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Note</f:label>
         <div class="col-9 col-lg-3 mb-3">
-            <f:input type="number" cssClass="form-control" path="rating"/>
+            <f:input type="number" step="0.5" cssClass="form-control" path="rating"/>
             <f:errors path="rating" cssClass="invalid-feedback"/>
         </div>
 
@@ -30,6 +31,6 @@
         </div>
     </div>
 </f:form>
-
+</div>
 
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

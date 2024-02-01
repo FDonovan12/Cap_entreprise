@@ -3,7 +3,7 @@
 <c:set var="title" scope="request" value="${platform.name}"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<div>
+<div class=" bg-dark bg-opacity-75 rounded p-3">
     <div class="d-flex justify-content-between">
 <%--            <img class="col-4 img-fluid" src="${platform.image}"  alt="">--%>
         <div class="d-flex">

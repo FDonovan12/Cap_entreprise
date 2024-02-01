@@ -22,9 +22,6 @@ public class ReviewDTO {
     @Max(value = 20, message = "This have to be lower or equals than 20")
     private float rating;
 
-    @NotBlank(message = "This should be a valid image")
-    private String image;
-
     @NotNull(message = "This should be a valid game")
     private Game game;
 

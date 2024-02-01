@@ -7,6 +7,7 @@ import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,11 +33,20 @@ public class ReviewService implements DAOServiceInterface<Review> {
     }
 
     public Page<Review> findAll(User user, Pageable pageable) {
-        System.out.println("pageable = " + pageable);
-        if (user instanceof Gamer) {
-            return reviewRepository.findByModeratorIsNotNullOrGamer(user, pageable);
+        Sort.Order orderModerator = pageable.getSort().getOrderFor("moderator");
+        Page<Review> pageReviews = reviewRepository.findByModeratorIsNotNullOrGamer(user, pageable);
+        if (user instanceof Moderator) {
+            if (orderModerator != null) {
+                if (orderModerator.isAscending()) {
+                    pageReviews = reviewRepository.findByModeratorIsNull(pageable);
+                } else {
+                    pageReviews = reviewRepository.findByModeratorIsNotNull(pageable);
+                }
+            } else {
+                pageReviews = reviewRepository.findAll(pageable);
+            }
         }
-        return  reviewRepository.findAll(pageable);
+        return  pageReviews;
     }
 
     public List<Double> getRatingOfGames(List<Game> games) {
@@ -121,15 +131,11 @@ public class ReviewService implements DAOServiceInterface<Review> {
     }
 
     public boolean moderate(long id, long moderate, String name) {
-        System.out.println("ReviewService.moderate 1");
-        System.out.println("moderate = " + moderate);
         Review review = getObjectById(id);
         if (moderate == 0L) {
-            System.out.println("ReviewService.moderate 2");
             reviewRepository.delete(review);
             return false;
         }
-        System.out.println("ReviewService.moderate 3");
         Moderator moderator = (Moderator) userService.getObjectByNickname(name);
         review.setModerator(moderator);
         reviewRepository.flush();

@@ -3,7 +3,7 @@
 <c:set var="title" scope="request" value="${game.name}"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<div class="row">
+<div class="row bg-dark bg-opacity-75 rounded p-3">
 <%--    <div class="col-1"></div>--%>
     <div class="col-12 col-md-4 vstack">
         <img class="img-fluid" src="${game.image}"  alt="">
@@ -12,8 +12,11 @@
                 <a class="btn btn-outline-warning" href="${UrlRoute.URL_GAME_EDIT}/${game.id}">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <a class="btn btn-outline-danger" >
+                <a class="btn btn-outline-danger" href="${UrlRoute.URL_GAME_DELETE}/${game.id}">
                     <i class="fa-regular fa-trash-can"></i>
+                </a>
+                <a class="btn btn-outline-success" href="${UrlRoute.URL_GAME_UPLOAD}/${game.id}">
+                    <i class="fa-regular fa-image"></i>
                 </a>
             </div>
         </security:authorize>
@@ -22,7 +25,7 @@
         <div class="row grid gap-3">
             <div class="d-flex justify-content-center col-12">
                 <h1 class="mb-2">${game.name}</h1>
-                <div class="ps-3 fs-3">${jspUtils.getStringRating(reviewService.getRatingByObject(game))}</div>
+                <div class="ps-3 fs-3"> Note ${jspUtils.getStringRating(reviewService.getRatingByObject(game))}</div>
             </div>
             <div class="col-6 col-md-6 d-flex justify-content-end">Genre :</div>
             <span class="col" >

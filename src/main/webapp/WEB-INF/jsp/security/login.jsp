@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
+<c:set var="title" scope="request" value="Connexion"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<form method="POST" action="${UrlRoute.URL_LOGIN}" class="col-8 mx-auto">
-    <h2 class="form-heading">Connection</h2>
+<form method="POST" action="${UrlRoute.URL_LOGIN}" class="col-8 mx-auto bg-dark bg-opacity-75 rounded p-3">
+    <h2 class="form-heading">Connexion</h2>
     <div class="form-group ${error != null ? 'has-error' : ''}">
 
         <div class="mb-3 row">

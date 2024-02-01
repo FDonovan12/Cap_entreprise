@@ -41,4 +41,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Double getRatingByObject(User user);
 
     Page<Review> findByGame(Game game, Pageable pageable);
+
+    Page<Review> findByModeratorIsNull(Pageable pageable);
+
+    Page<Review> findByModeratorIsNotNull(Pageable pageable);
 }

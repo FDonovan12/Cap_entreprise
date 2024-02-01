@@ -138,7 +138,6 @@ public class GameService implements DAOServiceInterface<Game> {
             stream.close();
             return PATH_IMAGE + path + file.getOriginalFilename();
         } catch (IOException e) {
-            System.out.println("Failed.");
             return "Error : Something goes wrong...";
         }
     }

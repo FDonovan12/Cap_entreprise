@@ -4,10 +4,10 @@
 <c:set var="contentUrlNew" scope="request" value="${UrlRoute.URL_GAME_NEW}"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
+<div class="row bg-dark bg-opacity-75 rounded p-3">
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/title.jsp"/>
 
 <c:if test="${!userLogged.leTrucQueKevinVeut}">
-<div class="col-12">
     ${jspUtils.getPagination(games, currentUrl, currentQuery)}
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
         <thead>
@@ -56,11 +56,11 @@
             </c:forEach>
         </tbody>
     </table>
-</div>
 </c:if>
 <c:if test="${userLogged.leTrucQueKevinVeut}">
     <c:set var="games" scope="request" value="${games}"/>
     <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/games_table.jsp"/>
 </c:if>
+</div>
 
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

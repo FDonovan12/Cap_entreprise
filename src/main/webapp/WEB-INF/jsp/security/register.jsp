@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
+<c:set var="title" scope="request" value="Inscription"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<div class="container col-8 mx-auto">
+<div class="container col-8 mx-auto bg-dark bg-opacity-75 rounded p-3">
     <f:form method="POST" modelAttribute="userForm" class="form-signin">
-        <h2 class="form-signin-heading">Create your account</h2>
+        <h2 class="form-signin-heading">Inscription</h2>
 
         <div class="mb-3 row">
             <f:label path="nickname" class="col-sm-2 col-form-label">Pseudo</f:label>

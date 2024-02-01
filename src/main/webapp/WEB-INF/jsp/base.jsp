@@ -20,14 +20,14 @@
 <body <c:if test="${userLogged.eccentric}">${rainbowStyle}</c:if>>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="w-100 d-md-flex justify-content-between">
-        <security:authorize access="isAuthenticated()">
-            <div class="ms-3">
+        <div class="ms-3">
+            <security:authorize access="isAuthenticated()">
                 <div class="d-flex justify-content-start">
                     <a class="navbar-brand btn btn-outline-secondary border-0" href="${UrlRoute.URL_REVIEW}">
                         Avis
                     </a>
                     <a class="navbar-brand btn btn-outline-secondary border-0" href="${UrlRoute.URL_GAME}">
-                        Jeu
+                        Jeux
                     </a>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
@@ -35,19 +35,19 @@
                                 Menu
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="${UrlRoute.URL_GENRE}">Genre</a></li>
-                                <li><a class="dropdown-item" href="${UrlRoute.URL_CLASSIFICATION}">Classification</a>
+                                <li><a class="dropdown-item" href="${UrlRoute.URL_GENRE}">Genres</a></li>
+                                <li><a class="dropdown-item" href="${UrlRoute.URL_CLASSIFICATION}">Classifications</a>
                                 </li>
-                                <li><a class="dropdown-item" href="${UrlRoute.URL_PUBLISHER}">Éditeur</a></li>
-                                <li><a class="dropdown-item" href="${UrlRoute.URL_BUSINESSMODEL}">Modèle économique</a>
+                                <li><a class="dropdown-item" href="${UrlRoute.URL_PUBLISHER}">Éditeurs</a></li>
+                                <li><a class="dropdown-item" href="${UrlRoute.URL_BUSINESSMODEL}">Modèles économique</a>
                                 </li>
-                                <li><a class="dropdown-item" href="${UrlRoute.URL_PLATFORM}">Platforme</a></li>
+                                <li><a class="dropdown-item" href="${UrlRoute.URL_PLATFORM}">Platformes</a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </security:authorize>
+            </security:authorize>
+        </div>
         <c:set var="colorEccentric" scope="request" value=""/>
         <c:set var="colorVeryEccentric" scope="request" value=""/>
         <c:set var="colorLeTrucQueKevinVeut" scope="request" value=""/>
@@ -89,7 +89,7 @@
         <security:authorize access="isAnonymous()">
             <div class="ms-3">
                 <a class="navbar-brand btn btn-outline-secondary border-0" href="${UrlRoute.URL_LOGIN}">
-                    Connection
+                    Connexion
                 </a>
                 <a class="navbar-brand btn btn-outline-secondary border-0" href="${UrlRoute.URL_REGISTER}">
                     Inscription
@@ -109,4 +109,4 @@
 
 </nav>
 
-<div class="container-fluid p-4">
+<div class="container-fluid p-4 ">
