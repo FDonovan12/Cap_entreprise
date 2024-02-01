@@ -32,8 +32,8 @@ public class PublisherController {
     @GetMapping(path = UrlRoute.URL_PUBLISHER)
     public ModelAndView index(ModelAndView mav, @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         mav.setViewName("publisher/index");
         mav.addObject("publishers", publisherService.findAll(pageable));
@@ -44,8 +44,8 @@ public class PublisherController {
     public ModelAndView show(ModelAndView mav, @PathVariable String field,
                                                 @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         Publisher publisher = publisherService.getByField(field);
 

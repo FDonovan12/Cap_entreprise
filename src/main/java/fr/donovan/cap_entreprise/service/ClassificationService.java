@@ -2,6 +2,7 @@ package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Classification;
 import fr.donovan.cap_entreprise.entity.Genre;
+import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.ClassificationRepository;
 import fr.donovan.cap_entreprise.DTO.ClassificationDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
@@ -21,6 +22,10 @@ public class ClassificationService implements DAOServiceInterface<Classification
 
     public List<Classification> findAll() {
         return this.classificationRepository.findAll();
+    }
+
+    public List<Classification> findAllSorted() {
+        return this.classificationRepository.findAllByOrderByNameAsc();
     }
 
     public Page<Classification> findAll(Pageable pageable) {
@@ -53,6 +58,7 @@ public class ClassificationService implements DAOServiceInterface<Classification
 
     public Classification persist(ClassificationDTO classificationDTO, Long id) {
         Classification classification = new Classification();
+        classification.setImage("https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg");
         if (id != null) {
             classification = getObjectById(id);
         }

@@ -32,6 +32,10 @@ public class GameService implements DAOServiceInterface<Game> {
         return this.gameRepository.findAll();
     }
 
+    public List<Game> findAllSorted() {
+        return this.gameRepository.findAllByOrderByNameAsc();
+    }
+
     public Page<Game> findAll(Pageable pageable) {
         return this.gameRepository.findAll(pageable);
     }
@@ -81,13 +85,14 @@ public class GameService implements DAOServiceInterface<Game> {
 
     public Game persist(GameDTO gameDTO, Long id) {
         Game game = new Game();
+        game.setImage("https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg");
         if (id != null) {
             game = getObjectById(id);
         }
         game.setName(gameDTO.getName());
         game.setDescription(gameDTO.getDescription());
         game.setPublishedAt(LocalDate.parse(gameDTO.getPublishedAt()));
-        game.setImage(gameDTO.getImage());
+//        game.setImage(gameDTO.getImage());
 
         game.setPublisher(gameDTO.getPublisher());
         game.setGenre(gameDTO.getGenre());

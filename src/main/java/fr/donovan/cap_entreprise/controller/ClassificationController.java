@@ -32,8 +32,8 @@ public class ClassificationController {
     @GetMapping(path = UrlRoute.URL_CLASSIFICATION)
     public ModelAndView index(ModelAndView mav, @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         mav.setViewName("classification/index");
         mav.addObject("classifications", classificationService.findAll(pageable));
@@ -44,8 +44,8 @@ public class ClassificationController {
     public ModelAndView show(ModelAndView mav, @PathVariable String field,
                                                 @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         Classification classification = classificationService.getByField(field);
 

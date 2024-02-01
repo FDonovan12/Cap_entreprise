@@ -5,65 +5,51 @@
 
 <h1>Formulaire de jeu</h1>
 <f:form modelAttribute="game" method="post" action="${currentUrl}" cssClass="p-1 p-md-5">
-    <div class="col-8 mx-auto mb-3 row">
-        <f:label path="name" class="col-sm-2 col-form-label">Nom</f:label>
-        <div class="col-sm-10 mb-3">
+    <div class="col-11 col-md-10 col-lg-9 mx-auto mb-3 row">
+        <f:label path="name" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Nom</f:label>
+        <div class="col-9 col-lg-5 mb-3">
             <f:input type="text" cssClass="form-control" path="name"/>
             <f:errors path="name" cssClass="invalid-feedback"/>
         </div>
 
-        <f:label path="description" class="col-sm-2 col-form-label">Description</f:label>
-        <div class="col-sm-10 mb-3">
-            <f:input type="text" cssClass="form-control" path="description"/>
-            <f:errors path="description" cssClass="invalid-feedback"/>
-        </div>
-
-        <f:label path="publishedAt" class="col-sm-2 col-form-label">Date de sortie</f:label>
-        <div class="col-sm-10 mb-3">
+        <f:label path="publishedAt" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Date de sortie</f:label>
+        <div class="col-9 col-lg-3 mb-3">
             <f:input type="date" cssClass="form-control" path="publishedAt"/>
             <f:errors path="publishedAt" cssClass="invalid-feedback"/>
         </div>
 
-        <f:label path="image" class="col-sm-2 col-form-label">Image</f:label>
-        <div class="col-sm-10 mb-3">
+        <f:label path="image" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Image</f:label>
+        <div class="col-9 col-lg-10 mb-3">
             <f:input type="text" cssClass="form-control" path="image"/>
             <f:errors path="image" cssClass="invalid-feedback"/>
         </div>
 
-        <f:label path="classification" class="col-sm-2 col-form-label">Classifcation</f:label>
-        <div class="col-sm-10 mb-3">
+        <f:label path="classification" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Classifcation</f:label>
+        <div class="col-9 col-lg-4 mb-3">
             <f:select items="${classifications}" itemLabel="name" cssClass="form-select" path="classification"/>
-<%--            <f:input type="number" cssClass="form-control" path="classification"/>--%>
             <f:errors path="classification" cssClass="invalid-feedback"/>
         </div>
 
-        <f:label path="genre" class="col-sm-2 col-form-label">Genre</f:label>
-        <div class="col-sm-10 mb-3">
+        <f:label path="genre" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Genre</f:label>
+        <div class="col-9 col-lg-4 mb-3">
             <f:select items="${genres}" itemLabel="name" cssClass="form-select" path="genre"/>
-<%--            <f:input type="number" cssClass="form-control" path="genre"/>--%>
             <f:errors path="genre" cssClass="invalid-feedback"/>
         </div>
 
-        <f:label path="publisher" class="col-sm-2 col-form-label">Éditeur</f:label>
-        <div class="col-sm-10 mb-3">
-            <f:select items="${publishers}" itemLabel="name" cssClass="form-select" path="publisher"/>
-<%--            <f:input type="number" cssClass="form-control" path="publisher"/>--%>
-            <f:errors path="publisher" cssClass="invalid-feedback"/>
-        </div>
-
-        <f:label path="businessModel" class="col-sm-2 col-form-label">Modele economique</f:label>
-        <div class="col-sm-10 mb-3">
+        <f:label path="businessModel" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Modèle économique</f:label>
+        <div class="col-9 col-lg-4 mb-3">
             <f:select items="${businessModels}" itemLabel="name" cssClass="form-select" path="businessModel"/>
-<%--            <f:input type="number" cssClass="form-control" path="businessModel"/>--%>
             <f:errors path="businessModel" cssClass="invalid-feedback"/>
         </div>
 
-<%--        <div class="col-sm-10 mb-3">--%>
-<%--            <f:input cssClass="form-control" path="moderator"/>--%>
-<%--            <f:errors path="moderator" cssClass="invalid-feedback"/>--%>
-<%--        </div>--%>
-        <f:label path="platforms" class="col-sm-2 col-form-label">Platform</f:label>
-        <div class="col-sm-10 mb-3">
+        <f:label path="publisher" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Éditeur</f:label>
+        <div class="col-9 col-lg-4 mb-3">
+            <f:select items="${publishers}" itemLabel="name" cssClass="form-select" path="publisher"/>
+            <f:errors path="publisher" cssClass="invalid-feedback"/>
+        </div>
+
+        <f:label path="platforms" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Platform</f:label>
+        <div class="col-9 col-lg-10 mb-3">
             <input class="form-control" data-multiple-select-input="platforms"/>
             <f:select path="platforms"
                       multiple="multiple"
@@ -75,6 +61,13 @@
             </f:select>
             <f:errors path="platforms" cssClass="invalid-feedback"/>
         </div>
+
+        <f:label path="description" class="col-3 col-lg-2 pe-1 col-form-label d-flex justify-content-end">Description</f:label>
+        <div class="col-9 col-lg-10 mb-3">
+            <f:input type="text" cssClass="form-control" path="description"/>
+            <f:errors path="description" cssClass="invalid-feedback"/>
+        </div>
+
         <div>
             <f:button class="btn btn-lg btn-success" type="submit">Submit</f:button>
             <f:button class="btn btn-lg btn-danger" type="reset">Reset</f:button>

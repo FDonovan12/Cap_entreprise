@@ -2,7 +2,6 @@ package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Gamer;
 import fr.donovan.cap_entreprise.entity.Moderator;
-import fr.donovan.cap_entreprise.entity.Review;
 import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.UserRepository;
 import fr.donovan.cap_entreprise.DTO.UserDTO;
@@ -16,9 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,9 +102,21 @@ public class UserService implements DAOServiceInterface<User>, UserDetailsServic
         return List.of(new SimpleGrantedAuthority("ROLE_GAMER"));
     }
 
-    public User eccentric(String name) {
+    public User style(int style, String name) {
         User user = getObjectByNickname(name);
-        user.setEccentric(!user.isEccentric());
+        if (style == 1) {
+            user.setEccentric(!user.isEccentric());
+            user.setVeryEccentric(false);
+        }
+        if (style == 2) {
+            user.setVeryEccentric(!user.isVeryEccentric());
+            user.setEccentric(true);
+        }
+        if (style == 3) {
+            user.setLeTrucQueKevinVeut(!user.isLeTrucQueKevinVeut());
+            user.setVeryEccentric(false);
+            user.setEccentric(false);
+        }
         return userRepository.saveAndFlush(user);
     }
 

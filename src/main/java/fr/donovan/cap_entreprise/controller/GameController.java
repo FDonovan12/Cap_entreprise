@@ -45,8 +45,8 @@ public class GameController {
     @GetMapping(path = UrlRoute.URL_GAME)
     public ModelAndView index(ModelAndView mav, @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "publishedAt" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         mav.setViewName("game/index");
         mav.addObject("games", gameService.findAll(pageable));
@@ -145,12 +145,12 @@ public class GameController {
         mav.addObject("game", dto);
         mav.addObject("action", uri);
         mav.addObject("isEdit", isEdit);
-        mav.addObject("genres", genreService.findAll());
-        mav.addObject("classifications", classificationService.findAll());
-        mav.addObject("publishers", publisherService.findAll());
+        mav.addObject("genres", genreService.findAllSorted());
+        mav.addObject("classifications", classificationService.findAllSorted());
+        mav.addObject("publishers", publisherService.findAllSorted());
 //        mav.addObject("moderators", userService.findAll());
-        mav.addObject("platforms", platformService.findAll());
-        mav.addObject("businessModels", businessModelService.findAll());
+        mav.addObject("platforms", platformService.findAllSorted());
+        mav.addObject("businessModels", businessModelService.findAllSorted());
         return mav;
     }
 

@@ -1,16 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../tag.jsp" %>
 <c:set var="title" scope="request" value="Jeux"/>
+<c:set var="contentUrlNew" scope="request" value="${UrlRoute.URL_GAME_NEW}"/>
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/base.jsp"/>
 
-<div class="d-flex justify-content-start">
-    <h1>Jeux</h1>
-    <security:authorize access="hasRole('ROLE_MODERATOR')">
-        <a class="btn btn-link text-success fs-2" href="${UrlRoute.URL_GAME_NEW}">
-            <i class="fa-solid fa-circle-plus"></i>
-        </a>
-    </security:authorize>
-</div>
+<jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/title.jsp"/>
+
+<c:if test="${!userLogged.leTrucQueKevinVeut}">
 <div class="col-12">
     ${jspUtils.getPagination(games, currentUrl, currentQuery)}
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
@@ -60,6 +56,11 @@
             </c:forEach>
         </tbody>
     </table>
-    </div>
 </div>
+</c:if>
+<c:if test="${userLogged.leTrucQueKevinVeut}">
+    <c:set var="games" scope="request" value="${games}"/>
+    <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/games_table.jsp"/>
+</c:if>
+
 <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/footer.jsp"/>

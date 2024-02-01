@@ -2,19 +2,21 @@ package fr.donovan.cap_entreprise.controller;
 
 import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.DTO.UserDTO;
+import fr.donovan.cap_entreprise.service.ReviewService;
 import fr.donovan.cap_entreprise.service.UserService;
 import fr.donovan.cap_entreprise.mapping.UrlRoute;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping
@@ -22,6 +24,8 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    private final ReviewService reviewService;
 
     @GetMapping(path = UrlRoute.URL_USER)
     public ModelAndView index(ModelAndView mav) {
@@ -31,11 +35,17 @@ public class UserController {
     }
 
     @GetMapping(value = UrlRoute.URL_USER + "/{field}")
-    public ModelAndView show(ModelAndView mav, @PathVariable String field) {
+    public ModelAndView show(ModelAndView mav, @PathVariable String field,
+                                                @PageableDefault(
+                                                size = 6, // nb Element par page
+                                                sort = { "createdAt" }, // order by
+                                                direction = Sort.Direction.DESC)
+                                                Pageable pageable) {
         User user = userService.getByField(field);
 
         mav.setViewName("user/show");
         mav.addObject("user", user);
+        mav.addObject("reviews", reviewService.findByGamer(user, pageable));
         return mav;
     }
 
@@ -85,15 +95,11 @@ public class UserController {
         return formHandle(result, mav, userDTO, id);
     }
 
-    @GetMapping(path = UrlRoute.URL_USER_ECCENTRIC + "/{url}")
-    public ModelAndView eccentric(ModelAndView mav, Principal principal, @PathVariable String url) {
-        userService.eccentric(principal.getName());
-        return new ModelAndView("redirect:" + url.replaceAll("-_-", "/"));
-    }
-
-    @GetMapping(path = UrlRoute.URL_USER_VERY_ECCENTRIC + "/{url}")
-    public ModelAndView veryEccentric(ModelAndView mav, Principal principal, @PathVariable String url) {
-        userService.veryEccentric(principal.getName());
+    @GetMapping(path = UrlRoute.URL_USER_STYLE+ "/{style}" + "/{url}")
+    public ModelAndView eccentric(ModelAndView mav, Principal principal,
+                                                    @PathVariable int style,
+                                                    @PathVariable String url) {
+        userService.style(style, principal.getName());
         return new ModelAndView("redirect:" + url.replaceAll("-_-", "/"));
     }
 

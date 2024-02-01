@@ -1,6 +1,7 @@
 package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Platform;
+import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.PlatformRepository;
 import fr.donovan.cap_entreprise.DTO.PlatformDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
@@ -20,6 +21,10 @@ public class PlatformService implements DAOServiceInterface<Platform> {
 
     public List<Platform> findAll() {
         return this.platformRepository.findAll();
+    }
+
+    public List<Platform> findAllSorted() {
+        return this.platformRepository.findAllByOrderByNameAsc();
     }
 
     public Page<Platform> findAll(Pageable pageable) {
@@ -52,11 +57,11 @@ public class PlatformService implements DAOServiceInterface<Platform> {
 
     public Platform persist(PlatformDTO platformDTO, Long id) {
         Platform platform = new Platform();
+        platform.setImage("https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg");
         if (id != null) {
             platform = getObjectById(id);
         }
         platform.setName(platformDTO.getName());
-        platform.setImage(platformDTO.getImage());
 
         return platformRepository.saveAndFlush(platform);
     }
@@ -65,7 +70,7 @@ public class PlatformService implements DAOServiceInterface<Platform> {
         Platform platform = getObjectById(id);
         PlatformDTO dto = new PlatformDTO();
         dto.setName(platform.getName());
-        dto.setImage(platform.getImage());
+//        dto.setImage(platform.getImage());
         return dto;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface GameRepository extends JpaRepository<Game, Long> {
+public interface GameRepository extends JpaRepository<Game, Long>, SortByName<Game>  {
 
 
     Page<Game> getByGenre(Genre genre, Pageable pageable);

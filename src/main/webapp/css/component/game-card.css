@@ -10,17 +10,22 @@
 
 .game-card {
     width: 100%;
-    height: 13em;
+    height: 25em;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
     /*height: 180px;*/
 }
 
 .game-card-img {
+    background: rgb(0 0 0 / 20%);
     width: 100%;
-    height: 11em;
+    height: 22em;
 }
 
 .game-card-img img {
-    width: 100%;
+    /*width: 100%;*/
+    margin: auto;
+    display: block;
     height: 100%;
     object-fit: cover;
     border-radius: 0.5em;

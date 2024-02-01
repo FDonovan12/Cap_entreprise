@@ -4,7 +4,6 @@ import fr.donovan.cap_entreprise.entity.*;
 import fr.donovan.cap_entreprise.repository.ReviewRepository;
 import fr.donovan.cap_entreprise.DTO.ReviewDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
-import jakarta.transaction.NotSupportedException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +26,9 @@ public class ReviewService implements DAOServiceInterface<Review> {
         return this.reviewRepository.findAll();
     }
 
-    public List<Review> findByGamer(User gamer) {
-        return this.reviewRepository.findByGamer(gamer);
+
+    public Page<Review> findByGamer(User gamer, Pageable pageable) {
+        return this.reviewRepository.findByGamer(gamer, pageable);
     }
 
     public Page<Review> findAll(User user, Pageable pageable) {
@@ -120,10 +120,19 @@ public class ReviewService implements DAOServiceInterface<Review> {
         reviewRepository.delete(getObjectById(id));
     }
 
-    public Review validate(long id, String name) {
+    public boolean moderate(long id, long moderate, String name) {
+        System.out.println("ReviewService.moderate 1");
+        System.out.println("moderate = " + moderate);
         Review review = getObjectById(id);
+        if (moderate == 0L) {
+            System.out.println("ReviewService.moderate 2");
+            reviewRepository.delete(review);
+            return false;
+        }
+        System.out.println("ReviewService.moderate 3");
         Moderator moderator = (Moderator) userService.getObjectByNickname(name);
         review.setModerator(moderator);
-        return reviewRepository.saveAndFlush(review);
+        reviewRepository.flush();
+        return true;
     }
 }

@@ -2,6 +2,7 @@ package fr.donovan.cap_entreprise.service;
 
 import fr.donovan.cap_entreprise.entity.Genre;
 import fr.donovan.cap_entreprise.entity.Platform;
+import fr.donovan.cap_entreprise.entity.User;
 import fr.donovan.cap_entreprise.repository.GenreRepository;
 import fr.donovan.cap_entreprise.DTO.GenreDTO;
 import fr.donovan.cap_entreprise.exception.NotFoundCapEntrepriseException;
@@ -21,6 +22,10 @@ public class GenreService implements DAOServiceInterface<Genre> {
 
     public List<Genre> findAll() {
         return this.genreRepository.findAll();
+    }
+
+    public List<Genre> findAllSorted() {
+        return this.genreRepository.findAllByOrderByNameAsc();
     }
 
     public Page<Genre> findAll(Pageable pageable) {
@@ -53,6 +58,7 @@ public class GenreService implements DAOServiceInterface<Genre> {
 
     public Genre persist(GenreDTO genreDTO, Long id) {
         Genre genre = new Genre();
+        genre.setImage("https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg");
         if (id != null) {
             genre = getObjectById(id);
         }

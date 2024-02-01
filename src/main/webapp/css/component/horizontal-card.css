@@ -1,0 +1,32 @@
+
+.main-horizontal-card {
+    text-decoration: none;
+    color: #fff;
+}
+
+.main-horizontal-card:hover {
+    color: #ff5400;
+}
+
+.horizontal-card {
+    width: 100%;
+    height: 13em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    /*height: 180px;*/
+}
+
+.horizontal-card-img {
+    background: rgb(0 0 0 / 20%);
+    width: 100%;
+    height: 11em;
+}
+
+.horizontal-card-img img {
+    /*width: 100%;*/
+    max-width: 100%;
+    margin: auto;
+    display: block;
+    max-height: 100%;
+    object-fit: cover;
+}

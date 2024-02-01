@@ -8,13 +8,8 @@
     <div class="ps-3 fs-3">${jspUtils.getStringRating(reviewService.getRatingByObject(user))}</div>
 </div>
 <div class="row">
-<%--    <div class="col-1"></div>--%>
-    <div class="col-12 col-md-8">
-        <div class="row grid gap-3">
-        </div>
-    </div>
     <h2>Commentaires</h2>
-    <c:set var="reviews" scope="request" value="${reviewService.findByGamer(user)}"/>
+    <c:set var="reviews" scope="request" value="${reviews}"/>
     <jsp:include flush="true" page="${contextPath}/WEB-INF/jsp/component/reviews_table.jsp"/>
 </div>
 

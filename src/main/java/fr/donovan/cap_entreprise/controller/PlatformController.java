@@ -32,8 +32,8 @@ public class PlatformController {
     @GetMapping(path = UrlRoute.URL_PLATFORM)
     public ModelAndView index(ModelAndView mav, @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         mav.setViewName("platform/index");
         mav.addObject("platforms", platformService.findAll(pageable));
@@ -44,8 +44,8 @@ public class PlatformController {
     public ModelAndView show(ModelAndView mav, @PathVariable String field,
                                                 @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         Platform platform = platformService.getByField(field);
 

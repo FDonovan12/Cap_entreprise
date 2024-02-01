@@ -41,9 +41,11 @@ h2 {
     display: block;
 }
 body {
-    background: linear-gradient(45deg, #404040, #7e0000);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
+    /*background: linear-gradient(45deg, #404040, #7e0000);*/
+    /*background-image: url("https://img.freepik.com/photos-premium/interpretation-fond-ecran-diagramme-voronoi_913287-1094.jpg?w=2000");*/
+    background-image: url("https://www.kdnuggets.com/wp-content/uploads/arya_quick_overview_voronoi_diagrams_5.jpg");
+    background-size: 200% 100%;
+    /*animation: gradient 10s ease infinite;*/
 }
 @keyframes gradient {
     0% {

@@ -68,9 +68,8 @@ public class ReviewController {
             ModelAndView mav,
             HttpServletRequest httpServletRequest
     ) {
-        mav.addObject("games", gameService.findAll());
+        mav.addObject("games", gameService.findAllSorted());
         ReviewDTO dto = new ReviewDTO();
-        dto.setGame(gameService.getObjectById(2L));
         return getFormByDTO(
                 mav,
                 dto,
@@ -148,9 +147,11 @@ public class ReviewController {
         return new ModelAndView("redirect:" + UrlRoute.URL_REVIEW);
     }
 
-    @GetMapping(path = UrlRoute.URL_REVIEW_VALIDATE + "/{id}")
-    public ModelAndView validateReview(ModelAndView mav, @PathVariable("id") long id, Principal principal) {
-        reviewService.validate(id, principal.getName());
+    @GetMapping(path = UrlRoute.URL_REVIEW_MODERATE + "/{id}" + "/{moderate}")
+    public ModelAndView moderateReview(ModelAndView mav, @PathVariable("id") long id,
+                                                        @PathVariable("moderate") long moderate,
+                                                        Principal principal) {
+        reviewService.moderate(id, moderate, principal.getName());
         return new ModelAndView("redirect:" + UrlRoute.URL_REVIEW);
     }
 

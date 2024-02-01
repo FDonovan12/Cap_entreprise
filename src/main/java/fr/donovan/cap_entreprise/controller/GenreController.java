@@ -29,8 +29,8 @@ public class GenreController {
     @GetMapping(path = UrlRoute.URL_GENRE)
     public ModelAndView index(ModelAndView mav, @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         mav.setViewName("genre/index");
         mav.addObject("genres", genreService.findAll(pageable));
@@ -41,8 +41,8 @@ public class GenreController {
     public ModelAndView show(ModelAndView mav, @PathVariable String field,
                                                 @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         Genre genre = genreService.getByField(field);
 

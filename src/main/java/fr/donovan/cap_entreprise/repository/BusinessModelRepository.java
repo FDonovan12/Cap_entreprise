@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BusinessModelRepository extends JpaRepository<BusinessModel, Long> {
-
+public interface BusinessModelRepository extends JpaRepository<BusinessModel, Long>, SortByName<BusinessModel> {
 
 }

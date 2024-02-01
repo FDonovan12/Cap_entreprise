@@ -32,8 +32,8 @@ public class BusinessModelController {
     @GetMapping(path = UrlRoute.URL_BUSINESSMODEL)
     public ModelAndView index(ModelAndView mav, @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         mav.setViewName("businessModel/index");
         mav.addObject("businessModels", businessModelService.findAll(pageable));
@@ -44,8 +44,8 @@ public class BusinessModelController {
     public ModelAndView show(ModelAndView mav, @PathVariable String field,
                                                 @PageableDefault(
                                                 size = 6, // nb Element par page
-                                                sort = { "id" }, // order by
-                                                direction = Sort.Direction.DESC)
+                                                sort = { "name" }, // order by
+                                                direction = Sort.Direction.ASC)
                                                 Pageable pageable) {
         BusinessModel businessModel = businessModelService.getByField(field);
 

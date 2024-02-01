@@ -5,12 +5,12 @@
 
 <div>
     <div class="d-flex justify-content-between">
+<%--            <img class="col-4 img-fluid" src="${platform.image}"  alt="">--%>
         <div class="d-flex">
             <h1 class="mb-2">${platform.name}</h1>
-            <%--        <img class="img-fluid" src="${platform.image}"  alt="">--%>
             <security:authorize access="hasRole('ROLE_MODERATOR')">
                 <a class="btn btn-link text-warning" href="${UrlRoute.URL_PLATFORM_EDIT}/${platform.id}">
-                    <i class="fa-solid fa-pen"></i>
+                        <i class="fa-solid fa-pen"></i>
                 </a>
             </security:authorize>
         </div>

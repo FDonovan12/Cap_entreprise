@@ -23,6 +23,10 @@ public class BusinessModelService implements DAOServiceInterface<BusinessModel> 
         return this.businessModelRepository.findAll();
     }
 
+    public List<BusinessModel> findAllSorted() {
+        return this.businessModelRepository.findAllByOrderByNameAsc();
+    }
+
     public Page<BusinessModel> findAll(Pageable pageable) {
         return this.businessModelRepository.findAll(pageable);
     }
@@ -53,6 +57,7 @@ public class BusinessModelService implements DAOServiceInterface<BusinessModel> 
 
     public BusinessModel persist(BusinessModelDTO businessModelDTO, Long id) {
         BusinessModel businessModel = new BusinessModel();
+        businessModel.setImage("https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg");
         if (id != null) {
             businessModel = getObjectById(id);
         }
@@ -64,7 +69,7 @@ public class BusinessModelService implements DAOServiceInterface<BusinessModel> 
     public BusinessModelDTO getDTOById(Long id) {
         BusinessModel businessModel = getObjectById(id);
         BusinessModelDTO dto = new BusinessModelDTO();
-        // dto.setName(businessModel.getName());
+        dto.setName(businessModel.getName());
         return dto;
     }
 }

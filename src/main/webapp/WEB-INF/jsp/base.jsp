@@ -50,11 +50,15 @@
         </security:authorize>
         <c:set var="colorEccentric" scope="request" value=""/>
         <c:set var="colorVeryEccentric" scope="request" value=""/>
+        <c:set var="colorLeTrucQueKevinVeut" scope="request" value=""/>
         <c:if test="${userLogged.eccentric}">
             <c:set var="colorEccentric" scope="request" value="bg-success"/>
         </c:if>
         <c:if test="${userLogged.veryEccentric}">
             <c:set var="colorVeryEccentric" scope="request" value="bg-success"/>
+        </c:if>
+        <c:if test="${userLogged.leTrucQueKevinVeut}">
+            <c:set var="colorLeTrucQueKevinVeut" scope="request" value="bg-success"/>
         </c:if>
         <security:authorize access="isAuthenticated()">
             <div class="ms-3">
@@ -64,17 +68,19 @@
                             Style
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <c:if test="${!userLogged.veryEccentric}">
-                                <li><a class="dropdown-item ${colorEccentric}" href="${UrlRoute.URL_USER_ECCENTRIC}/${currentPath.replaceAll("/","-_-")}">
+                            <c:if test="${!userLogged.veryEccentric && !userLogged.leTrucQueKevinVeut}">
+                                <li><a class="dropdown-item ${colorEccentric}" href="${UrlRoute.URL_USER_STYLE}/1/${currentPath.replaceAll("/","-_-")}">
                                     Excentrique</a>
                                 </li>
                             </c:if>
-                            <c:if test="${userLogged.eccentric}">
-                                <li><a class="dropdown-item ${colorVeryEccentric}" href="${UrlRoute.URL_USER_VERY_ECCENTRIC}/${currentPath.replaceAll("/","-_-")}">
+                            <c:if test="${userLogged.eccentric  && !userLogged.leTrucQueKevinVeut}">
+                                <li><a class="dropdown-item ${colorVeryEccentric}" href="${UrlRoute.URL_USER_STYLE}/2/${currentPath.replaceAll("/","-_-")}">
                                     Trés excentrique</a>
                                 </li>
                             </c:if>
-                            <li><a class="dropdown-item" href="#">Le truc que Kevin veux</a></li>
+                            <li><a class="dropdown-item ${colorLeTrucQueKevinVeut}" href="${UrlRoute.URL_USER_STYLE}/3/${currentPath.replaceAll("/","-_-")}">
+                                Le truc que Kevin veux</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
