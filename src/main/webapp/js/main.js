@@ -5,9 +5,37 @@
 // import "lib/bootstrap/bootstrap.bundle";
 // import "lib/bootstrap/bootstrap.esm";
 
+function initDropDown() {
+    const dropdowns = document.querySelectorAll('.dropdown-toggle');
+    const pray = document.querySelectorAll('.pray');
+    for (const dropdown of dropdowns) {
+        if(dropdown.matches(':hover')) {
+            console.log("test")
+            dropdown.classList.toggle('show')
+            console.log(dropdown)
+            if (dropdown.hasChildNodes()) {
+                const children = dropdown.childNodes;
+
+                for (const child of children) {
+                    child.classList.toggle('show')
+                }
+            }
+        }
+    }
+}
+
 function initSortable() {
-    const sortableItems = document.querySelectorAll('[data-my-sortable]');
+    const sortableItems = document.getElementsByTagName('a');
+    const pray = document.getElementsByTagName('a');
+    const pray3 = document.querySelectorAll('.game-card');
     for (const sortableItem of sortableItems) {
+        if(sortableItem.matches(':hover')) {
+            console.log("test")
+            for (const pray2 of pray3) {
+                pray2.classList.toggle('d-none')
+                console.log(pray2)
+            }
+        }
         if (window
             .location
             .search
@@ -18,13 +46,16 @@ function initSortable() {
     }
 }
 
-window.addEventListener('load', () => {
-    console.log("test")
-    initSortable();
+window.addEventListener('mouseover', () => {
+    // initSortable();
+    initDropDown();
     initFilter();
     initSortableSelect();
+    // for (const sortableItem of sortableItems) {
+    // }
 });
-
+window.addEventListener('mouseout', () => {
+});
 function initSortableSelect() {
     const selects = document.querySelectorAll('.sortable-select')
     selects.forEach((select) => {
