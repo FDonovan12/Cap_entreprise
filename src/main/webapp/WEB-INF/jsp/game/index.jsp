@@ -12,7 +12,7 @@
     <table class="table <c:if test="${!userLogged.veryEccentric}">table-striped-columns</c:if> table-dark table-hover">
         <thead>
             <tr>
-                <td ${rainbowStyleVery}>image</td>
+                <td ${rainbowStyleVery}>image </td>
                 <td ${rainbowStyleVery}>
                     <c:set var="label" scope="request" value="Nom"/>
                     <c:set var="sortable" value="name"/>

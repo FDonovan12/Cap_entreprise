@@ -36,8 +36,12 @@ public class GameService implements DAOServiceInterface<Game> {
         return this.gameRepository.findAllByOrderByNameAsc();
     }
 
-    public Page<Game> findAll(Pageable pageable) {
-        return this.gameRepository.findAll(pageable);
+    public List<Game> findAll(Pageable pageable) {
+        Page<Game> page = this.gameRepository.findAll(pageable);
+        List<Game> games = page.getContent();
+        Pageable pageable2 = page.previousPageable();
+        page.
+        return games;
     }
 
 
