@@ -15,6 +15,7 @@
     <script type="text/javascript" src="${contextPath}/js/main.js"></script>
     <script type="text/javascript" src="${contextPath}/js/page/multiple-select.js"></script>
     <script type="text/javascript" src="${contextPath}/js/lib/bootstrap/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="../../css/main.css" rel="stylesheet">
 </head>
 <body <c:if test="${userLogged.eccentric}">${rainbowStyle}</c:if>>

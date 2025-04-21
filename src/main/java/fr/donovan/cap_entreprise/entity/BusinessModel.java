@@ -32,4 +32,5 @@ public class BusinessModel implements EntityInterface, NomenclatureInterface {
 
     @OneToMany(mappedBy = "businessModel")
     private List<Game> games = new ArrayList<>();
+
 }
